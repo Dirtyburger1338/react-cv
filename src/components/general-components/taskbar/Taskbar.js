@@ -1,19 +1,11 @@
 import React from "react";
 import "./Taskbar.css";
 
-class StartModal extends React.Component {
+class Taskbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      clicked: false
-    };
-    this.closeModal = this.closeModal.bind(this);
-  }
 
-  closeModal() {
-    this.setState({
-      clicked: true
-    });
+    this.activePrograms = ["Cmd.exe", "notepad.exe"];
   }
 
   render() {
@@ -29,23 +21,19 @@ class StartModal extends React.Component {
         </button>
 
         <div className="taskbar-active-programs">
-          <div>
-            <div>
+          {this.activePrograms.map(program => (
+            <div className={"task-" + program}>
               <div>
-                <span>Ico</span> Program 2
+                <div>
+                  <span>Ico </span>
+                  <span>{program}</span>
+                </div>
+                <div></div>
               </div>
-              <div></div>
             </div>
-          </div>
-          <div>
-            <div>
-              <div>
-                <span>Ico</span> Program 2
-              </div>
-              <div></div>
-            </div>
-          </div>
+          ))}
         </div>
+
         <div className="taskbar-clock">
           <span>12:45</span>
         </div>
@@ -54,4 +42,4 @@ class StartModal extends React.Component {
   }
 }
 
-export default StartModal;
+export default Taskbar;

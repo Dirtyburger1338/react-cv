@@ -6,6 +6,7 @@ import cmdIcon from "./../images/cmd-icon.ico";
 import noteIcon from "./../images/note-icon.ico";
 import Taskbar from "./general-components/taskbar/Taskbar";
 import StartModal from "./general-components/start-modal/Start-modal";
+import { NONAME } from "dns";
 
 class Windows extends React.Component {
   constructor(props) {
@@ -45,13 +46,24 @@ class Windows extends React.Component {
     programNode.animate(
       [
         // keyframes
-        { transform: "translateY(0px)" },
-        { transform: "translateY(-300px)" }
+        {
+          transform: "translate(0px, 0px)",
+          opacity: 1
+        },
+        {
+          opacity: 0.3
+        },
+        {
+          transform: "translate(-100px,2000px)",
+          opacity: 0,
+          display: "none"
+        }
       ],
       {
         // timing options
-        duration: 1000,
-        iterations: 1
+        duration: 300,
+        iterations: 1,
+        fill: "forwards"
       }
     );
   };
