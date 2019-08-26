@@ -1,0 +1,65 @@
+#Menu-page{
+   /* background-color: rgb(240, 240, 240); */
+    display: flex;
+    flex-direction: column;
+}
+.Menu-text{
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding:40px 0;
+}
+.Menu-buttons{
+    padding:40px 0;
+    display: flex;    
+    flex-direction: column;
+}
+.Menu-buttons > div{
+    text-align: center;
+    margin: 10px;
+    display: flex;
+    padding: 4px 0;
+    flex-direction: column;
+    width: 72px;
+    justify-content: space-evenly;
+    cursor: pointer;
+    color: white;
+    font-size: 12px;
+    text-shadow: 2px 2px #000000;
+}
+.Menu-buttons > div:active{
+ 
+}
+.Menu-buttons > div:focus{ 
+
+}
+.Menu-buttons > div:hover{ 
+    outline: 2px solid rgba(85, 147, 177, 0.63);
+    background-color: rgba(55, 116, 145, 0.37);
+}
+.Menu-buttons img{
+    height: 44px;
+}
+.bios-btn{
+
+}
+
+
+.preview-full{
+    /* position: absolute;
+    top: 50px;
+    left: 70px; */
+    width: 500px !important;
+    height: 300px !important;
+    /* margin: 0 !important; */
+}
+
+
+@keyframes createBox {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(6);
+    }
+  }
