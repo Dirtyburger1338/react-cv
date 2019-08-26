@@ -1,0 +1,68 @@
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  background-color: #000000eb;
+  left: 0;
+  z-index: 20;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  height: 34px;
+  color: white;
+}
+.taskbar-active-programs {
+  display: flex;
+  flex: 1;
+}
+.taskbar-active-programs > div {
+  width: 150px;
+  display: flex;
+  justify-content: center;
+  margin: 0 5px;
+  align-items: center;
+}
+.taskbar-active-programs > div:hover {
+  background-color: rgb(27, 25, 27);
+}
+.taskbar-clock {
+  font-size: 12px;
+  width: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.taskbar-clock:hover {
+  background-color: rgb(27, 25, 27);
+}
+
+.taskbar-startmenu-btn {
+  background-color: black;
+  border: none;
+  padding: 12px;
+  height: 34px;
+  width: 50px;
+  margin: 0;
+}
+.taskbar-startmenu-btn:hover {
+  background-color: rgb(27, 25, 27);
+}
+.taskbar-startmenu-btn:active {
+  background-color: rgb(17, 16, 17);
+}
+.taskbar-startmenu-btn:focus {
+  background-color: rgb(49, 47, 49);
+}
+.taskbar-startmenu-btn:hover > svg {
+  filter: invert(40%) sepia(89%) saturate(308%) hue-rotate(162deg)
+    brightness(97%) contrast(101%);
+}
+.taskbar-startmenu-btn > svg {
+  width: 18px;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"),
+    url("../../../fonts/roboto/Roboto-Bold.ttf") format("woff");
+}
