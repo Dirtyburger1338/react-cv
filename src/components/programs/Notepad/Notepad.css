@@ -1,0 +1,77 @@
+#notepad {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  width: 700px;
+  height: 600px;
+  pointer-events: all;
+  position: absolute;
+  z-index: 9;
+  left: 20%;
+  top: 12%;
+  display: flex;
+  flex-direction: column;
+  /* transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; */
+}
+.notepad-text-window {
+  padding: 2px;
+  height: 100%;
+  background-color: white;
+  color: #000000;
+  font-size: 14px;
+  font-family: consolas;
+  overflow: scroll;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+.notepad-toolbar {
+  background-color: #ffffff;
+  color: #000000e0;
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
+}
+.notepad-toolbar-btn {
+  width: 30px;
+  height: 100%;
+  border: none;
+  background-color: #ffffff;
+  font-size: 11px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  /* z-index: 10; */
+}
+.notepad-toolbar-btn:active {
+  background-color: #c9c8c8;
+}
+.notepad-toolbar-btn:hover {
+  background-color: #d8d8d8;
+}
+.notepad-toolbar-btn:last-child:hover {
+  background-color: rgb(219, 36, 36);
+  color: white;
+}
+.toolbar-title {
+  flex: 1 1;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  line-height: 15px;
+}
+.toolbar-btn-row {
+  color: #00000091;
+  font-size: 12px;
+  font-family: Arial;
+  border-bottom: 1px solid gainsboro;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+.toolbar-btn-row > span {
+  padding: 2px 7px;
+}
+.toolbar-icon {
+  margin: 4px 4px 9px 4px;
+}

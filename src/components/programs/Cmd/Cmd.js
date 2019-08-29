@@ -1,7 +1,7 @@
 import React from "react";
 import "./Cmd.css";
+import Draggable from "react-draggable"; // Both at the same time
 
-import Draggable, { DraggableCore } from "react-draggable"; // Both at the same time
 class Cmd extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +9,6 @@ class Cmd extends React.Component {
     this.state = { isfullscreen: false };
   }
   handleFullScreenClick() {
-    console.log(this.state.isfullscreen);
     if (this.state.isfullscreen) {
       this.setState({ isfullscreen: false });
       this.props.normalize("#cmd");
@@ -18,13 +17,18 @@ class Cmd extends React.Component {
       this.setState({ isfullscreen: true });
     }
   }
+
   render() {
     //&#10064;
     // var maximizeBtn = this.props.isfullscreen ? &#x2610; : &#10064;
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
     return (
-      <Draggable handle=".toolbar-title" disabled={this.state.isfullscreen}>
-        <div id="cmd">
+      <Draggable
+        handle=".toolbar-title"
+        disabled={this.state.isfullscreen}
+        onStart={() => this.props.active(".cmd-exe")}
+      >
+        <div id="cmd" onClick={() => this.props.active(".cmd-exe")}>
           <div className="toolbar">
             <div className="toolbar-title">
               <span className="toolbar-icon">▇</span>

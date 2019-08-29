@@ -1,14 +1,16 @@
 #taskbar {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   background-color: #000000eb;
   left: 0;
-  z-index: 20;
   right: 0;
   display: flex;
   justify-content: space-between;
   height: 34px;
   color: white;
+  border: 1px solid #444444c7;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
+    0 10px 10px -5px rgba(0, 0, 0, 0.21);
 }
 .taskbar-active-programs {
   display: flex;
@@ -20,6 +22,10 @@
   justify-content: center;
   margin: 0 5px;
   align-items: center;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
 }
 .taskbar-active-programs > div:hover {
   background-color: rgb(27, 25, 27);
@@ -31,11 +37,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
 }
 .taskbar-clock:hover {
   background-color: rgb(27, 25, 27);
 }
-
+.active {
+  background-color: #444444c9;
+}
 .taskbar-startmenu-btn {
   background-color: black;
   border: none;

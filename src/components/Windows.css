@@ -14,7 +14,19 @@
   width: auto !important;
   height: auto !important;
 }
+.active-program {
+  z-index: 10;
+}
 .cmd-exe {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.notepad-exe {
   display: none;
   position: absolute;
   top: 0;
@@ -55,7 +67,12 @@
 .toolbar-btn-collection {
   overflow: hidden;
 }
-
+.program-window-back {
+  z-index: 1;
+}
+.program-window-front {
+  z-index: 2;
+}
 #Menu-page {
   height: 100vh;
   background: url("../images/win-bg.jpg");
@@ -106,7 +123,8 @@
 .Menu-buttons img {
   height: 44px;
 }
-.bios-btn {
+.minimize-animation {
+  transform: translate(-50%, -50%);
 }
 
 .preview-full {

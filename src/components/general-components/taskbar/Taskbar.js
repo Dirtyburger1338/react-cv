@@ -4,9 +4,14 @@ import "./Taskbar.css";
 class Taskbar extends React.Component {
   constructor(props) {
     super(props);
-
-    this.activePrograms = ["Cmd.exe", "notepad.exe"];
+    this.state = {
+      activeProgram: ""
+    };
   }
+
+  setActive = program => {
+    this.setState({ activeProgram: program });
+  };
 
   render() {
     return (
@@ -21,11 +26,20 @@ class Taskbar extends React.Component {
         </button>
 
         <div className="taskbar-active-programs">
-          {this.activePrograms.map(program => (
-            <div className={"task-" + program}>
+          {this.props.OpenPrograms.map(program => (
+            <div
+              className={
+                "task-" +
+                program +
+                " " +
+                (this.state.activeProgram === program ? "active" : "inactive")
+              }
+              key={program}
+              onClick={() => this.props.taskbarItemClicked(program)}
+            >
               <div>
                 <div>
-                  <span>Ico </span>
+                  <span>Ico {this.props.ActiveProgram} </span>
                   <span>{program}</span>
                 </div>
                 <div></div>
