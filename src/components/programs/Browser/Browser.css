@@ -1,0 +1,209 @@
+#browser {
+  background-color: rgb(255, 255, 255);
+  color: rgb(14, 14, 14);
+  pointer-events: all;
+  z-index: 9;
+  display: flex !important;
+  flex-direction: column;
+  border: 1px solid #ffffff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
+    0 10px 10px -5px rgba(0, 0, 0, 0.21);
+  cursor: default !important;
+}
+
+.browser-toolbar {
+  background-color: #ebecef;
+  color: #000000e0;
+  display: flex;
+  justify-content: space-between;
+  height: 32px;
+}
+.browser-toolbar-btn {
+  width: 46px;
+  color: #757575;
+  height: 100%;
+  border: none;
+  background-color: #ebecef;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  /* z-index: 10; */
+}
+.browser-toolbar-btn:active {
+  background-color: #c9c8c8;
+}
+.browser-toolbar-btn:hover {
+  background-color: #e6e6e6;
+  color: #000000;
+}
+.browser-toolbar-btn:last-child:hover {
+  background-color: rgb(219, 36, 36);
+  color: white;
+}
+.browser-btn-row {
+  color: #00000091;
+  background-color: #ffffff;
+  font-size: 12px;
+  font-family: Arial;
+  height: 20px;
+  border-bottom: 1px solid gainsboro;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  line-height: 20px;
+  user-select: none;
+}
+.browser-btn-row > span {
+  padding: 4px 18px;
+  font-size: 12px;
+}
+.browser-btn-row > span:first-child {
+  color: white;
+  background-color: rgba(0, 102, 180, 1);
+}
+.browser-btn-row > span:not(:first-child):hover {
+  outline: 1px solid lightgray;
+  outline-offset: -1px;
+}
+.browser-btn-row > span:first-child:hover {
+  color: white;
+  background-color: rgb(61, 115, 209);
+}
+
+.browser-toolbar-title {
+  flex: 1 1;
+  font-size: 12px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  line-height: 15px;
+}
+.browser-toolbar-icon {
+  margin: 4px 4px 9px 4px;
+}
+.browser-toolbar-left-btns {
+  display: flex;
+  padding: 0 4px;
+  align-items: center;
+}
+.browser-toolbar-left-btns > img {
+  width: 22px;
+  padding: 0 3px;
+}
+.browser-toolbar-title {
+  color: gray;
+}
+.browser-toolbar-divider {
+  height: 11px;
+  margin: 0 3px;
+  border-right: 1px solid gray;
+}
+.browser-navigation-bar {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  color: rgb(46, 46, 46);
+  height: 30px;
+  align-items: center;
+  padding: 4px;
+}
+.browser-navigation-bar > div {
+  height: 100%;
+}
+.browser-url-area {
+  display: flex;
+  flex: 1 1;
+  font-size: 12px;
+  padding: 0 6px;
+  border-radius: 17px;
+  margin: 4px;
+  background-color: #eff0f1;
+}
+.browser-url-area-text > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+}
+.browser-url-area-text > div:nth-child(2) {
+  font-size: 14px;
+}
+.browser-url-area img {
+  height: 20px;
+  padding-top: 2px;
+}
+.browser-url-area-text svg {
+  height: 8px;
+  padding-top: 2px;
+}
+.browser-url-area > div {
+  display: flex;
+  fill: rgb(88, 88, 88);
+  flex: 1;
+  justify-content: space-between;
+}
+.browser-url-area-text {
+  display: flex;
+  /* line-height: 18px; */
+  align-items: center;
+}
+.browser-url-area-text > div {
+  padding: 0 2px;
+}
+.browser-arrow-btn-container {
+  display: flex;
+  padding: 0 6px;
+}
+.browser-arrow-btn-container svg {
+  height: 16px;
+  fill: #c7c7c7;
+}
+
+.browser-arrow-btn-container > div {
+  padding: 7px 6px;
+  text-align: center;
+  width: 16px;
+}
+.browser-search-box {
+  min-width: 206px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  line-height: 18px;
+  border: 1px solid rgb(204, 204, 204);
+  margin: 4px 8px;
+}
+.browser-url-area-favourite {
+  display: flex;
+  align-items: center;
+}
+.browser-url-area-favourite svg {
+  fill: gray;
+  height: 14px;
+}
+.browser-toolbar-user-icons {
+  display: flex;
+  align-items: center;
+}
+.browser-toolbar-user-icons > span {
+  padding: 0 10px;
+}
+.user-icon > div {
+  background-color: #adadad;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: flex;
+  color: white;
+  justify-content: center;
+  font-size: 14px;
+}
+.browser-toolbar-user-icons svg,
+img {
+  height: 14px;
+}
+.browser-display-area {
+  flex: 1;
+}
+.browser-display-area iframe {
+  width: 100%;
+  border: none;
+  height: 100%;
+}
