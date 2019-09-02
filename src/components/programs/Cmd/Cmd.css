@@ -1,24 +1,22 @@
 #cmd {
   background-color: rgb(12, 12, 12);
   color: white;
-  width: 700px;
-  height: 400px;
   pointer-events: all;
-  position: absolute;
   z-index: 9;
-  left: 10%;
-  top: 6%;
-  display: flex;
+  display: flex!important;
   flex-direction: column;
   border: 1px solid #444444c7;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
     0 10px 10px -5px rgba(0, 0, 0, 0.21);
+    cursor: default !important;  
+
 }
 .cmd-text-window {
   padding: 2px;
   height: 100%;
   color: #ffffffc4;
   font-size: 14px;
+  flex:1;
   font-family: monospace;
   overflow-y: scroll;
   -webkit-user-select: none; /* Safari */
@@ -29,6 +27,7 @@
 .toolbar-title {
   flex: 1 1;
   font-size: 12px;
+  cursor: default;
   display: flex;
   align-items: center;
   line-height: 15px;
@@ -36,3 +35,4 @@
 .toolbar-icon {
   margin: 4px 4px 9px 4px;
 }
+
