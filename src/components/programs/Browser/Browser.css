@@ -12,18 +12,18 @@
 }
 
 .browser-toolbar {
-  background-color: #ebecef;
+  background-color: #e7e8ea;
   color: #000000e0;
   display: flex;
   justify-content: space-between;
-  height: 32px;
+  height: 40px;
 }
 .browser-toolbar-btn {
   width: 46px;
   color: #757575;
   height: 100%;
   border: none;
-  background-color: #ebecef;
+  background-color: #e7e8ea;
   font-size: 14px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -109,6 +109,38 @@
 .browser-navigation-bar > div {
   height: 100%;
 }
+.browser-toolbar-tabs{
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+.browser-toolbar-tabs > div{
+  height: 31px;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 6px 6px 0 0;
+  flex-grow: 2;
+  max-width: 220px;
+  justify-content: space-between;
+}
+.browser-toolbar-tabs > .active-tab{
+  height: 31px;
+  display: flex;
+  font-size: 12px;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  padding: 0 10px;
+  border-radius: 6px 6px 0 0;
+  flex-grow: 2;
+  max-width: 220px;
+  justify-content: space-between;
+}
+.browser-toolbar-tabs > div:first-child{
+  margin-left:8px;
+}
 .browser-url-area {
   display: flex;
   flex: 1 1;
@@ -128,6 +160,11 @@
 .browser-url-area img {
   height: 20px;
   padding-top: 2px;
+}
+.browser-url-area-favourite img{
+  height: 14px;
+  padding-top: 2px;
+  opacity: 0.6;
 }
 .browser-url-area-text svg {
   height: 8px;

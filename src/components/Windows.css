@@ -27,7 +27,7 @@
   pointer-events: none;
 }
 .browser-exe {
-  /* display: none; */
+  display: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -84,6 +84,7 @@
 }
 .toolbar-btn-collection {
   overflow: hidden;
+  display: flex;
 }
 .program-window-back {
   z-index: 1;

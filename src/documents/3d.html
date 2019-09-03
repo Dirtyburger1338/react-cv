@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    </head>
+    <body>
+        <div id="textDiv" style="font-size: 67px;">
+            Good luck nerds
+        </div>
+       
+        <div id="cntDiv" style="font-size: 41px;">0 apples</div>
+            <canvas id="renderCanvas"></canvas>
+        
+        <script>
+            var direction = "forward";
+            var snakeArr = [];
+            var game = true;
+            var mili = 700;
+            var counter = 0; 
+            var engine;
+            var scene;
+            var restart = function(){
+               scene.dispose();
+            }
+            window.addEventListener('DOMContentLoaded', function(){
+                // get the canvas DOM element
+                var canvas = document.getElementById('renderCanvas'); 
+                canvas.style.width = "1000px";
+                canvas.style.height =   "700px";        
+                // load the 3D engine
+                engine = new BABYLON.Engine(canvas, true);        
+                // createScene function that creates and return the scene
+
+                var createScene = function(){
+                    // create a basic BJS Scene object
+                    var scene = new BABYLON.Scene(engine); 
+                    var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, -10, new BABYLON.Vector3(0, 0, 0), scene);
+                    camera.setPosition(new BABYLON.Vector3(0, 0, -20));
+                    camera.attachControl(canvas, true);
+                    var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(10,10,0), scene);                
+
+                    var box = BABYLON.Mesh.CreateBox("box", 11, scene);
+                    box.scaling.y = 0.01;
+                    box.position.y = -5.5;
+                    var materialSphere1 = new BABYLON.StandardMaterial("texture1", scene);
+                    materialSphere1.alpha = 0.21;
+
+                    var topSide = BABYLON.Mesh.CreateBox("topSide", 11, scene);
+                    topSide.scaling.y = 0.01;
+                    topSide.position.y = +5.5;
+                    topSide.material = materialSphere1;                    
+
+                    var rightSide = BABYLON.Mesh.CreateBox("rightSide", 11, scene);
+                    rightSide.material = materialSphere1;
+                    rightSide.scaling.x = 0.01;
+                    rightSide.scaling.y = 1;
+                    rightSide.position.x = box.position.x + 5.5;
+                    rightSide.position.y = -0;
+                    rightSide.position.z = box.position.z;
+
+                     var leftSide = BABYLON.Mesh.CreateBox("leftSide", 11, scene);
+                    leftSide.material = materialSphere1;
+                    leftSide.scaling.x = 0.01;
+                    leftSide.scaling.y = 1;
+                    leftSide.position.x = box.position.x - 5.5;
+                    leftSide.position.y = -0;
+                    leftSide.position.z = box.position.z;
+
+                    var backSide = BABYLON.Mesh.CreateBox("backSide",11, scene);
+                    backSide.material = materialSphere1;
+                    backSide.scaling.z = 0.01;
+                    backSide.scaling.y = 1;
+                    backSide.position.x = box.position.x;
+                    backSide.position.y = box.position.y +5.5;
+                    backSide.position.z =  box.position.z-5.5;
+
+                    var frontSide = BABYLON.Mesh.CreateBox("frontSide", 11, scene);
+                    frontSide.material = materialSphere1;
+                    frontSide.scaling.z = 0.01;
+                    frontSide.scaling.y = 1;
+                    frontSide.position.x = box.position.x;
+                    frontSide.position.y = box.position.y + 5.5;
+                    frontSide.position.z =  box.position.z + 5.5;
+
+                    // return the created scene
+                    return scene;
+                }
+    
+                // call the createScene function
+                scene = createScene();
+    
+                // run the render loop
+                engine.runRenderLoop(function(){
+                    scene.render();
+                });
+    
+                // the canvas/window resize event handler
+             
+                runGame(scene,engine);
+            });
+            window.addEventListener('resize', function(){
+                    engine.resize();
+                });
+
+            window.addEventListener("keydown", function(e) {
+                if (e.keyCode == 65 && direction != "right") { 
+                    direction = "left";
+                   
+                } else if (e.keyCode == 68 && direction != "left") {
+                    direction = "right";
+                }
+                  else if (e.keyCode == 83 && direction != "forward") {
+                    direction = "back";
+                }
+                else if (e.keyCode == 87 && direction != "back") { 
+                    direction = "forward";
+                }
+                else if (e.keyCode == 81 && direction != "down") { 
+                    direction = "up";
+                }
+                else if (e.keyCode == 69 && direction != "up") { 
+                    direction = "down";
+                }
+                else if (e.keyCode == 32 && direction != "down") { 
+                    direction = "up";
+                }
+                else if (e.keyCode == 17 && direction != "up") { 
+                    direction = "down";
+                }
+             
+            });
+          
+
+            var runGame = function(scene,engine){
+                var count = 1;
+
+                var snake = BABYLON.MeshBuilder.CreateBox("snake", {height: 0.9, width: 0.9, depth: 0.9}, scene);
+                var boxMaterial = new BABYLON.StandardMaterial("material", scene);
+                boxMaterial.diffuseColor = new BABYLON.Color3(0, 1, 0);
+                boxMaterial.alpha = 0.9;
+                snake.material = boxMaterial;
+
+                snake.position = new BABYLON.Vector3(0,0,0);
+                snakeArr.push(snake);
+                //tryck på space för att börja             
+               
+
+                var myFunction = function() {
+                   
+                    if (game == true){
+                        move(scene, snake, engine);
+                    setTimeout(myFunction, mili);
+                    }
+                   
+                }               
+                    setTimeout(myFunction, counter);                
+                    generateApple(scene);
+                    createLines(scene);
+            }
+
+            var generateApple =function(scene){
+                
+                    var apple = BABYLON.MeshBuilder.CreateSphere("apple", {diameter:1, diameterX: 1}, scene);
+                    apple.position = generatePos();
+                    //console.log(apple.position);
+                    var boxMaterial = new BABYLON.StandardMaterial("material", scene);
+                    boxMaterial.diffuseColor = new BABYLON.Color3(1, 0, 0);
+                    apple.material = boxMaterial;  
+
+            }
+
+            var generatePos = function(){
+                var vec = new BABYLON.Vector3(Math.floor(Math.random() * 10) -5,Math.floor(Math.random() * 10) -5,Math.floor(Math.random() * 10) -5);
+                for (var i = 0; i < snakeArr.lenght; i++){
+                    if (JSON.stringify(snakeArr[i].position) === JSON.stringify(vec)){
+                        generatePos();
+                    }    
+                }
+                return vec;
+            }
+
+            var move = function(scene, snake,engine ){
+                
+                var localPosition = snake.getPositionExpressedInLocalSpace();
+                var snakeBodyPosition = snake.getPositionExpressedInLocalSpace();
+                var temppos = snakeArr[snakeArr.length - 1].position;
+
+                switch(direction) {
+                        case "forward":
+                            
+                            localPosition.z += 1;
+                                                    
+                            break;
+                        case "back":
+                            localPosition.z -= 1;
+                            break;                        
+                        case "right":
+                            localPosition.x += 1;
+                            
+                            break;
+                        case "left":
+                            localPosition.x -= 1;
+                            break;
+                        case "up":
+                            localPosition.y += 1;
+                            break;
+                        case "down":
+                            localPosition.y -= 1;
+                            break;  
+                        case "space":
+                            localPosition.y += 1;
+                            break;
+
+                        default:                            
+                            break;
+                }              
+
+                   //Check if collision with self
+                if (snakeArr.length > 1){
+                    for (var i = 0; i < snakeArr.length; i++){
+                        if (JSON.stringify(localPosition) === JSON.stringify(snakeArr[i].position)){
+                        console.log("krash");
+                        textDiv.textContent = "    ----   You Lewse sucker <h1>heh</h1>" ; 
+                        game = false;   
+                        }
+                    }    
+                }
+               
+                //Move the snake forward
+                if (snakeArr.length > 1){                   
+                    for (var i = snakeArr.length; i > 1; i--){                      
+                        snakeArr[i-1].position = snakeArr[i-2].position;
+                    }
+                }
+                snake.setPositionWithLocalVector(localPosition);                
+                
+
+                //Check if snake hits a wall
+                if (localPosition.y > 5 || localPosition.y < -5 || localPosition.x > 5 || localPosition.x < -5 || localPosition.z> 5 || localPosition.z < -5){                   
+
+                    textDiv.innerHTML = "    ----   You Lewse you dufus " ;
+                    game = false;
+                    restart();
+                }
+             
+                //Check if the snake hits an apple
+                if ( JSON.stringify(scene.getMeshByID("apple").position) === JSON.stringify(localPosition) ){
+
+                    scene.getMeshByID("apple").dispose();
+
+                    //Add another box to the snakes body
+                    var snakebody = BABYLON.MeshBuilder.CreateBox("snakebody", {height: 0.8, width: 0.8, depth: 0.8}, scene);
+                    snakebody.position = temppos;
+                    var boxMaterials = new BABYLON.StandardMaterial("material", scene);
+                    boxMaterials.alpha = 0.5;
+                    boxMaterials.diffuseColor = new BABYLON.Color3(0, 153/255, 0);
+                    snakebody.material = boxMaterials;
+                    snakeArr.push(snakebody);
+
+                    
+                    generateApple(scene);                   
+                    cntDiv.textContent = counter + " apples";    
+                    counter++;
+                    if (counter > 0){
+                        scene.getMeshByID("lines").dispose();
+                        scene.getMeshByID("lines1").dispose();
+                        scene.getMeshByID("lines2").dispose();
+                    }
+                    
+                    if (mili > 85){
+                        mili -= 28;
+                    }
+                    createLines(scene);               
+                }
+
+                
+            }
+          
+            createLines = function(scene){
+                    //create orientation-lines
+                    var myPoints2 = [
+                        new BABYLON.Vector3(scene.getMeshByID("apple").position.x, scene.getMeshByID("apple").position.y, 5),
+                        new BABYLON.Vector3(scene.getMeshByID("apple").position.x, scene.getMeshByID("apple").position.y, -5)
+                        ];
+
+                        var lines2 = BABYLON.MeshBuilder.CreateLines("lines", {points: myPoints2}, scene);  
+
+                        var myPoints1 = [
+                        new BABYLON.Vector3(5, scene.getMeshByID("apple").position.y, scene.getMeshByID("apple").position.z),
+                        new BABYLON.Vector3(-5, scene.getMeshByID("apple").position.y, scene.getMeshByID("apple").position.z)
+                        ];
+
+                        var lines1 = BABYLON.MeshBuilder.CreateLines("lines1", {points: myPoints1}, scene);   
+
+                        var myPoints = [
+                            
+                        new BABYLON.Vector3(scene.getMeshByID("apple").position.x, 5, scene.getMeshByID("apple").position.z),
+                        new BABYLON.Vector3(scene.getMeshByID("apple").position.x, -5, scene.getMeshByID("apple").position.z)
+	                ];
+
+                    var lines = BABYLON.MeshBuilder.CreateLines("lines2", {points: myPoints}, scene); 
+                }
+        
+        </script>
+        </body>
+</html>

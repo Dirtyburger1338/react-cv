@@ -5,19 +5,27 @@ import browserIco from "../../../images/shell32_264.ico";
 import browserPropertiesIco from "../../../images/imageres_5367.ico";
 import chromeIcon from "../../../images/Chrome-icon.png";
 import moreSettings from "../../../images/more-settings.svg";
+// import snake3d from "../../../documents/index.html";
 import starFavourite from "../../../images/star-favourite.png";
+// const snake3d = require("../../../documents/3d.html");
+
 class Browser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dirtyminiaturesActive: false,
-      snake3dActive: false,
+      activeTab: "",
       minWidth: 600,
       minHeight: 400,
-      x: 10,
+      x: 710,
       y: 10,
-      isfullscreen: false
+      isfullscreen: false,
+      listOfOpenWebsites: []
     };
+    this.listOfWebsites = [
+      { name: "DirtyMiniatures", url: "http://dirtyminiatures.com/" },
+      { name: "Snake3d", url: "http://google.com/" }
+    ]
+    //this.listOfOpenWebsites = [];
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
   }
   handleFullScreenClick() {
@@ -35,15 +43,65 @@ class Browser extends React.Component {
       snake3dActive: false,
       dirtyminiaturesActive: false
     });
-    if (name == "dirtyminiatures") {
+    if (name === "dirtyminiatures") {
       this.setState({ dirtyminiaturesActive: true });
-    } else if (name == "snake3d") {
+    } else if (name === "snake3d") {
       this.setState({ snake3dActive: true });
+    }
+  }
+
+  openNewPage(openedPage) {
+    for (let page of this.listOfWebsites) {
+      if (page.name.toLowerCase() === openedPage.toLowerCase()) {
+
+        if (!this.state.listOfOpenWebsites.some(x => x['name'].toLowerCase() === openedPage.toLowerCase())) {
+          this.state.listOfOpenWebsites.push(page);
+
+        }
+        else {
+
+        }
+        this.setState({ activeTab: page.name });
+      }
+    }
+
+  }
+  closeTab(pageName) {
+    console.log("close ", pageName)
+    if (this.state.listOfOpenWebsites.length < 2) {
+      console.log("closing papp")
+      this.props.exit(".browser-exe");
+    }
+    else {
+      console.log(this.state.listOfOpenWebsites)
+      let idx = this.state.listOfOpenWebsites.findIndex(site => site.name.toLowerCase() === pageName.toLowerCase());
+      var kk = this.state.listOfOpenWebsites.splice(idx, 1);
+      var uu = this.state.listOfOpenWebsites.filter(x => x.name != pageName);
+      console.log(uu)
+      console.log(kk)
+      console.log(this.state.listOfOpenWebsites)
+      this.state.listOfOpenWebsites = JSON.parse(JSON.stringify(uu));
+      let newName = uu[0].name;
+
+      var fe = this.setState({ activeTab: newName, listOfOpenWebsites: uu });
+      console.log(fe)
+      console.log(newName)
+      console.log(this.state)
     }
   }
 
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
+    var iframeUrl = "";
+    switch (this.state.activeTab.toLowerCase()) {
+      case "dirtyminiatures":
+        iframeUrl = "http://dirtyminiatures.com/";
+        break;
+      case "snake3d":
+        iframeUrl = "https://sogetivisitorclient.z6.web.core.windows.net/";
+        break;
+      default:
+    }
     return (
       <Rnd
         id="browser"
@@ -51,9 +109,9 @@ class Browser extends React.Component {
         minWidth="580"
         onMouseDown={() => this.props.active(".browser-exe")}
         default={{
-          x: 75,
+          x: 415,
           y: 26,
-          width: 900,
+          width: 1100,
           height: 700
         }}
         cancel=".not-draggable"
@@ -65,7 +123,27 @@ class Browser extends React.Component {
               : "browser-toolbar not-draggable"
           }
         >
-          <div className="browser-toolbar-tabs"></div>
+          {this.state.activeTab}
+          <div className="browser-toolbar-tabs">
+            {this.state.listOfOpenWebsites.map(program => (
+              <div
+                key={program.name}
+                className={this.state.activeTab === program.name ? "active-tab" : ""}
+                onClick={() => this.openNewPage(program.name)}>
+                <span
+                >
+                  {program.name}
+                </span>
+                <span
+                  onClick={() => this.closeTab(program.name)}
+                >
+                  &#10005;
+            </span>
+              </div>
+
+            ))}
+
+          </div>
 
           <div className="toolbar-btn-collection not-draggable">
             <button
@@ -133,26 +211,28 @@ class Browser extends React.Component {
                 <div>
                   <img src={browserIco}></img>
                 </div>
-                <div>http://localhost:3000/</div>
+                <div>{iframeUrl}</div>
               </div>
               <div className="browser-url-area-favourite">
                 <img src={starFavourite}></img>
+
               </div>
             </div>
           </div>
           <div className="browser-toolbar-user-icons">
-            <span class="user-icon">
+            <span className="user-icon">
               <div>?</div>
             </span>
-            <span class="more-settings-icon">
+            <span className="more-settings-icon">
               <img src={moreSettings}></img>
             </span>
           </div>
         </div>
         <div className="browser-display-area">
-          <iframe src="http://dirtyminiatures.com/" />
+          <iframe src={iframeUrl} title="browser" />
+          {/* <iframe src={snake3d} /> */}
         </div>
-      </Rnd>
+      </Rnd >
     );
   }
 }

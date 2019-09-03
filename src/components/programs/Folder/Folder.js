@@ -17,6 +17,7 @@ class Folder extends React.Component {
       y: 10,
       isfullscreen: false
     };
+    this.clicks = [];
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
   }
   handleFullScreenClick() {
@@ -29,6 +30,29 @@ class Folder extends React.Component {
     }
   }
 
+  //Single or Double click navigator
+  clickHandler(state, e) {
+    e.persist();
+    e.preventDefault();
+    this.clicks.push(new Date().getTime());
+    window.clearTimeout(this.timeout);
+    this.timeout = window.setTimeout(() => {
+      if (
+        this.clicks.length > 1 &&
+        this.clicks[this.clicks.length - 1] -
+        this.clicks[this.clicks.length - 2] <
+        200
+      ) {
+        this.openShortcut(state);
+      }
+
+    }, 250);
+    this.setFolderIconActive(state);
+  }
+  openShortcut(state) {
+    console.log(state)
+    this.props.shortcutOpened(state)
+  }
   setFolderIconActive(name) {
     this.setState({
       snake3dActive: false,
@@ -218,7 +242,7 @@ class Folder extends React.Component {
         <div className="folder-content-window not-draggable">
           <div className="folder-content-shortcuts">
             <div
-              onClick={e => this.setFolderIconActive("dirtyminiatures")}
+              onClick={e => this.clickHandler("dirtyminiatures", e)}
               className={
                 this.state.dirtyminiaturesActive ? "folder-icon-active" : ""
               }
@@ -227,7 +251,7 @@ class Folder extends React.Component {
               <span>Dirtyminiatures.html</span>
             </div>
             <div
-              onClick={e => this.setFolderIconActive("snake3d")}
+              onClick={e => this.clickHandler("snake3d", e)}
               className={this.state.snake3dActive ? "folder-icon-active" : ""}
             >
               <img src={chromeIcon}></img>

@@ -2,6 +2,7 @@ import React from "react";
 import "./Windows.css";
 import ReactDOM from "react-dom";
 
+import folderIcon from "../images/shell32_264.ico";
 import Folder from "./programs/Folder/Folder";
 import Cmd from "./programs/Cmd/Cmd";
 import Notepad from "./programs/Notepad/Notepad";
@@ -26,9 +27,12 @@ class Windows extends React.Component {
 
     this.listOfProgramCoords = [
       { name: ".cmd-exe", x: "0", y: "0" },
-      { name: ".notepad-exe", x: "0", y: "0" }
+      { name: ".notepad-exe", x: "0", y: "0" },
+      { name: ".folder-exe", x: "0", y: "0" },
+      { name: ".browser-exe", x: "0", y: "0" }
     ];
     this.taskbar = React.createRef();
+    this.browser = React.createRef();
 
     this.openAppFromIcon = this.openAppFromIcon.bind(this);
     this.closeAppFromToolbar = this.closeAppFromToolbar.bind(this);
@@ -50,11 +54,12 @@ class Windows extends React.Component {
       this.setState({ OpenPrograms: list });
       this.setActiveWindow(program);
     } else {
-      console.log("feokefa");
-      console.log(window.style.opacity);
-      if (window.style.opacity == 0) {
-        console.log("feok");
+      if (window.style.opacity === 0) {
+        console.log("opac")
         this.openAppFromTaskbar(program);
+      }
+      else {
+        this.setActiveWindow(program)
       }
     }
   };
@@ -88,7 +93,7 @@ class Windows extends React.Component {
             });
           }
           setTimeout(
-            function() {
+            function () {
               animate().then(x => {
                 window.style.transition = "none";
               });
@@ -125,7 +130,6 @@ class Windows extends React.Component {
     const node = ReactDOM.findDOMNode(this);
     let programNode = node.querySelector(program);
     let window = programNode.querySelector(":scope > div");
-
     let taskbarNodes = node.querySelectorAll(".taskbar-active-programs > div");
     for (let node of taskbarNodes) {
       if (node.classList.contains("task-" + program)) {
@@ -183,7 +187,6 @@ class Windows extends React.Component {
     programNode.classList.remove("program-fullscreen");
   };
   setActiveWindow = program => {
-    console.log(program);
     const node = ReactDOM.findDOMNode(this);
 
     let programNode = node.querySelector(program);
@@ -203,14 +206,10 @@ class Windows extends React.Component {
     this.openAppFromIcon(e);
     this.taskbar.current.setActive(e);
   };
-  selectApp(e) {
-    console.log(e);
-  }
   getCoords(program) {
     return this.listOfProgramCoords.find(x => x.name === program);
   }
   setCoords(program, x, y) {
-    console.log(this.listOfProgramCoords);
     var foundIndex = this.listOfProgramCoords.findIndex(
       x => x.name === program
     );
@@ -229,16 +228,18 @@ class Windows extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-          this.clicks[this.clicks.length - 2] <
-          200
+        this.clicks[this.clicks.length - 2] <
+        200
       ) {
         this.openApp(state);
-      } else {
-        this.selectApp(state);
       }
     }, 250);
   }
-
+  openShortcut = (shortcut) => {
+    this.browser.current.openNewPage(shortcut)
+    this.openApp(".browser-exe");
+    this.taskbar.current.setActive(".browser-exe");
+  }
   render() {
     //this.props.stateChange(state)
 
@@ -275,7 +276,7 @@ class Windows extends React.Component {
             onClick={e => this.clickHandler(".folder-exe", e)}
           >
             <div>
-              <img src={noteIcon}></img>
+              <img src={folderIcon}></img>
             </div>
             <div>Projects</div>
           </div>
@@ -306,10 +307,12 @@ class Windows extends React.Component {
             normalize={this.undoMaximizeAppFromToolbar}
             minimize={this.minimizeAppFromToolbar}
             active={this.setActiveWindow}
+            shortcutOpened={this.openShortcut}
           ></Folder>
         </div>
         <div className="program browser-exe">
           <Browser
+            ref={this.browser}
             exit={this.closeAppFromToolbar}
             maximize={this.maximizeAppFromToolbar}
             normalize={this.undoMaximizeAppFromToolbar}
