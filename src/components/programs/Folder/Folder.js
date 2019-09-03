@@ -21,13 +21,10 @@ class Folder extends React.Component {
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
   }
   handleFullScreenClick() {
-    if (this.state.isfullscreen) {
-      this.setState({ isfullscreen: false });
-      this.props.normalize("#folder");
-    } else {
-      this.props.maximize("#folder");
-      this.setState({ isfullscreen: true });
-    }
+    this.setState({ isfullscreen: !this.state.isfullscreen });
+    this.state.isfullscreen
+        ? this.props.normalize("#folder")
+        : this.props.maximize("#folder"); 
   }
 
   //Single or Double click navigator
