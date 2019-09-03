@@ -24,9 +24,10 @@ class Browser extends React.Component {
     this.listOfWebsites = [
       { name: "DirtyMiniatures", url: "http://dirtyminiatures.com/" },
       { name: "Snake3d", url: "http://google.com/" }
-    ]
+    ];
     //this.listOfOpenWebsites = [];
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
+    this.closeTab = this.closeTab.bind(this);
   }
   handleFullScreenClick() {
     if (this.state.isfullscreen) {
@@ -53,46 +54,42 @@ class Browser extends React.Component {
   openNewPage(openedPage) {
     for (let page of this.listOfWebsites) {
       if (page.name.toLowerCase() === openedPage.toLowerCase()) {
-
-        if (!this.state.listOfOpenWebsites.some(x => x['name'].toLowerCase() === openedPage.toLowerCase())) {
+        if (
+          !this.state.listOfOpenWebsites.some(
+            x => x["name"].toLowerCase() === openedPage.toLowerCase()
+          )
+        ) {
           this.state.listOfOpenWebsites.push(page);
-
-        }
-        else {
-
+        } else {
         }
         this.setState({ activeTab: page.name });
       }
     }
-
   }
-  closeTab(pageName) {
-    console.log("close ", pageName)
+  closeTab = pageName => {
     if (this.state.listOfOpenWebsites.length < 2) {
-      console.log("closing papp")
       this.props.exit(".browser-exe");
+    } else {
+      var remainingTabs = this.state.listOfOpenWebsites.filter(
+        x => x.name != pageName
+      );
+      var newName = remainingTabs[0].name;
+      this.setState(
+        {
+          activeTab: newName + "",
+          listOfOpenWebsites: remainingTabs
+        },
+        () => {
+          console.log("tabs: ", this.state);
+        }
+      );
     }
-    else {
-      console.log(this.state.listOfOpenWebsites)
-      let idx = this.state.listOfOpenWebsites.findIndex(site => site.name.toLowerCase() === pageName.toLowerCase());
-      var kk = this.state.listOfOpenWebsites.splice(idx, 1);
-      var uu = this.state.listOfOpenWebsites.filter(x => x.name != pageName);
-      console.log(uu)
-      console.log(kk)
-      console.log(this.state.listOfOpenWebsites)
-      this.state.listOfOpenWebsites = JSON.parse(JSON.stringify(uu));
-      let newName = uu[0].name;
-
-      var fe = this.setState({ activeTab: newName, listOfOpenWebsites: uu });
-      console.log(fe)
-      console.log(newName)
-      console.log(this.state)
-    }
-  }
+  };
 
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
     var iframeUrl = "";
+    var active = this.state.activeTab;
     switch (this.state.activeTab.toLowerCase()) {
       case "dirtyminiatures":
         iframeUrl = "http://dirtyminiatures.com/";
@@ -109,7 +106,7 @@ class Browser extends React.Component {
         minWidth="580"
         onMouseDown={() => this.props.active(".browser-exe")}
         default={{
-          x: 415,
+          x: 215,
           y: 26,
           width: 1100,
           height: 700
@@ -123,28 +120,28 @@ class Browser extends React.Component {
               : "browser-toolbar not-draggable"
           }
         >
-          {this.state.activeTab}
           <div className="browser-toolbar-tabs">
             {this.state.listOfOpenWebsites.map(program => (
               <div
                 key={program.name}
-                className={this.state.activeTab === program.name ? "active-tab" : ""}
-                onClick={() => this.openNewPage(program.name)}>
+                className={active === program.name ? "active-tab" : ""}
+                onClick={event => {
+                  event.stopPropagation();
+                  this.openNewPage(program.name);
+                }}
+              >
+                <span>{program.name}</span>
                 <span
-                >
-                  {program.name}
-                </span>
-                <span
-                  onClick={() => this.closeTab(program.name)}
+                  onClick={event => {
+                    event.stopPropagation();
+                    this.closeTab(program.name);
+                  }}
                 >
                   &#10005;
-            </span>
+                </span>
               </div>
-
             ))}
-
           </div>
-
           <div className="toolbar-btn-collection not-draggable">
             <button
               className="browser-toolbar-btn minimize-btn"
@@ -215,7 +212,6 @@ class Browser extends React.Component {
               </div>
               <div className="browser-url-area-favourite">
                 <img src={starFavourite}></img>
-
               </div>
             </div>
           </div>
@@ -232,7 +228,7 @@ class Browser extends React.Component {
           <iframe src={iframeUrl} title="browser" />
           {/* <iframe src={snake3d} /> */}
         </div>
-      </Rnd >
+      </Rnd>
     );
   }
 }

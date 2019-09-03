@@ -40,18 +40,16 @@ class Folder extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-        this.clicks[this.clicks.length - 2] <
-        200
+          this.clicks[this.clicks.length - 2] <
+          300
       ) {
         this.openShortcut(state);
       }
-
-    }, 250);
+    }, 300);
     this.setFolderIconActive(state);
   }
   openShortcut(state) {
-    console.log(state)
-    this.props.shortcutOpened(state)
+    this.props.shortcutOpened(state);
   }
   setFolderIconActive(name) {
     this.setState({

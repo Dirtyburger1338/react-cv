@@ -109,13 +109,13 @@
 .browser-navigation-bar > div {
   height: 100%;
 }
-.browser-toolbar-tabs{
+.browser-toolbar-tabs {
   position: relative;
   display: flex;
   align-items: flex-end;
   width: 100%;
 }
-.browser-toolbar-tabs > div{
+.browser-toolbar-tabs > div {
   height: 31px;
   display: flex;
   font-size: 12px;
@@ -125,8 +125,16 @@
   flex-grow: 2;
   max-width: 220px;
   justify-content: space-between;
+  transition: background-color 0.35s;
 }
-.browser-toolbar-tabs > .active-tab{
+.browser-toolbar-tabs > div:hover {
+  background-color: rgb(250, 250, 250);
+}
+.browser-toolbar-tabs > .active-tab:hover {
+  background-color: rgb(255, 255, 255);
+  transition: none;
+}
+.browser-toolbar-tabs > .active-tab {
   height: 31px;
   display: flex;
   font-size: 12px;
@@ -138,8 +146,8 @@
   max-width: 220px;
   justify-content: space-between;
 }
-.browser-toolbar-tabs > div:first-child{
-  margin-left:8px;
+.browser-toolbar-tabs > div:first-child {
+  margin-left: 8px;
 }
 .browser-url-area {
   display: flex;
@@ -161,7 +169,7 @@
   height: 20px;
   padding-top: 2px;
 }
-.browser-url-area-favourite img{
+.browser-url-area-favourite img {
   height: 14px;
   padding-top: 2px;
   opacity: 0.6;
