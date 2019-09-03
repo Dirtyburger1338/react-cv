@@ -1,6 +1,7 @@
 {
   "name": "react-cv",
   "version": "0.1.0",
+  "homepage": "https://dirtyburger1338.github.io/react-cv/",
   "private": true,
   "dependencies": {
     "gh-pages": "^2.1.1",
@@ -31,7 +32,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ],
-    "homepage": "https://dirtyburger1338.github.io/react-cv"
+    ]
   }
 }

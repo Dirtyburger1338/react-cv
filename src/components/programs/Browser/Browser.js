@@ -1,5 +1,6 @@
 import React from "react";
 import "./Browser.css";
+import Iframe from "../../general-components/iframe.js";
 import { Rnd } from "react-rnd";
 import browserIco from "../../../images/shell32_264.ico";
 import browserPropertiesIco from "../../../images/imageres_5367.ico";
@@ -19,7 +20,8 @@ class Browser extends React.Component {
       x: 710,
       y: 10,
       isfullscreen: false,
-      listOfOpenWebsites: []
+      listOfOpenWebsites: [],
+      src: "../../../documents/3d.html"
     };
     this.listOfWebsites = [
       { name: "DirtyMiniatures", url: "http://dirtyminiatures.com/" },
@@ -92,7 +94,7 @@ class Browser extends React.Component {
     var active = this.state.activeTab;
     switch (this.state.activeTab.toLowerCase()) {
       case "dirtyminiatures":
-        iframeUrl = "http://dirtyminiatures.com/";
+        iframeUrl = "https://dirtyminiatures.com/";
         break;
       case "snake3d":
         iframeUrl = "https://sogetivisitorclient.z6.web.core.windows.net/";
@@ -225,7 +227,8 @@ class Browser extends React.Component {
           </div>
         </div>
         <div className="browser-display-area">
-          <iframe src={iframeUrl} title="browser" />
+          <Iframe title="browser" source={this.state.src} />
+          {/* <iframe src={iframeUrl} title="browser" /> */}
           {/* <iframe src={snake3d} /> */}
         </div>
       </Rnd>
