@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6a0e2b91.chunk.css",
+    "main.js": "/static/js/main.487174e9.chunk.js",
+    "main.js.map": "/static/js/main.487174e9.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.b97e43fc.js",
+    "runtime~main.js.map": "/static/js/runtime~main.b97e43fc.js.map",
+    "static/js/2.43afca0d.chunk.js": "/static/js/2.43afca0d.chunk.js",
+    "static/js/2.43afca0d.chunk.js.map": "/static/js/2.43afca0d.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.455c0865bd9fb03d357fa27007c8d940.js": "/precache-manifest.455c0865bd9fb03d357fa27007c8d940.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.6a0e2b91.chunk.css.map": "/static/css/main.6a0e2b91.chunk.css.map",
+    "static/media/Chrome-icon.png": "/static/media/Chrome-icon.86f49ad5.png",
+    "static/media/Start-modal.css": "/static/media/Roboto-Bold.e07df86c.ttf",
+    "static/media/cmd-icon.ico": "/static/media/cmd-icon.dedf478d.ico",
+    "static/media/imageres_5367.ico": "/static/media/imageres_5367.f81d3bf5.ico",
+    "static/media/more-settings.svg": "/static/media/more-settings.f8059619.svg",
+    "static/media/note-icon.ico": "/static/media/note-icon.b98de453.ico",
+    "static/media/shell32_264.ico": "/static/media/shell32_264.bdc4ab6b.ico",
+    "static/media/star-favourite.png": "/static/media/star-favourite.3a08388a.png",
+    "static/media/Windows.css": "/static/media/win-bg.ed754344.jpg"
+  }
+}
