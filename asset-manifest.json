@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/react-cv/static/css/main.3eba6fa2.chunk.css",
+    "main.css": "/react-cv/static/css/main.67b9c9dd.chunk.css",
     "main.js": "/react-cv/static/js/main.915f7a6d.chunk.js",
     "main.js.map": "/react-cv/static/js/main.915f7a6d.chunk.js.map",
     "runtime~main.js": "/react-cv/static/js/runtime~main.59df248e.js",
@@ -8,9 +8,9 @@
     "static/js/2.48cdb055.chunk.js": "/react-cv/static/js/2.48cdb055.chunk.js",
     "static/js/2.48cdb055.chunk.js.map": "/react-cv/static/js/2.48cdb055.chunk.js.map",
     "index.html": "/react-cv/index.html",
-    "precache-manifest.b869ed1e5f1459e6d3d9ff22c48cf60e.js": "/react-cv/precache-manifest.b869ed1e5f1459e6d3d9ff22c48cf60e.js",
+    "precache-manifest.9e9848df18b5ca1f6d0a0161e412ade2.js": "/react-cv/precache-manifest.9e9848df18b5ca1f6d0a0161e412ade2.js",
     "service-worker.js": "/react-cv/service-worker.js",
-    "static/css/main.3eba6fa2.chunk.css.map": "/react-cv/static/css/main.3eba6fa2.chunk.css.map",
+    "static/css/main.67b9c9dd.chunk.css.map": "/react-cv/static/css/main.67b9c9dd.chunk.css.map",
     "static/media/Chrome-icon.png": "/react-cv/static/media/Chrome-icon.86f49ad5.png",
     "static/media/Start-modal.css": "/react-cv/static/media/Roboto-Bold.e07df86c.ttf",
     "static/media/cmd-icon.ico": "/react-cv/static/media/cmd-icon.dedf478d.ico",
