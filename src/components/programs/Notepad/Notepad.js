@@ -25,6 +25,8 @@ class Notepad extends React.Component {
 
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
+    let text =
+      "Hello, my name is Per Nilsson, \nI'm a 30-something year old software developer from a town called Sundsvall in little Sweden. \nI currently work as an IT-consultant doing a bit of everything.\nEven though I work as fullstack I'm definitely enjoying front-end work the most. \n\nIn my personal life I spend my days gaming, playing board games \nor collecting and painting miniatures for tabletop games such as Warhammer.\nI live together with my girlfriend (also a software developer) and our little Robot vacuum cleaner Lin Lin. \n\nBefore I went into the IT-world I used do play poker professionally \naswell as doing art commisions for many many years. \n\nFeel free to contact me at perJLnilsson@gmail.com";
     return (
       <Rnd
         id="notepad"
@@ -34,12 +36,18 @@ class Notepad extends React.Component {
         default={{
           x: 65,
           y: 116,
-          width: 600,
-          height: 400,
+          width: 700,
+          height: 400
         }}
         cancel=".not-draggable"
       >
-        < div className={!this.state.isfullscreen ? "notepad-toolbar" : "notepad-toolbar not-draggable"} >
+        <div
+          className={
+            !this.state.isfullscreen
+              ? "notepad-toolbar"
+              : "notepad-toolbar not-draggable"
+          }
+        >
           <div className="toolbar-title">
             <span className="toolbar-icon">▇</span>
             <span>Personal information.txt</span>
@@ -50,7 +58,7 @@ class Notepad extends React.Component {
               onClick={() => this.props.minimize(".notepad-exe")}
             >
               &#8213;
-              </button>
+            </button>
             <button
               className="notepad-toolbar-btn maximize-btn"
               onClick={this.handleFullScreenClick}
@@ -62,7 +70,7 @@ class Notepad extends React.Component {
               onClick={() => this.props.exit(".notepad-exe")}
             >
               &#10005;
-              </button>
+            </button>
           </div>
         </div>
         <div className="toolbar-btn-row not-draggable">
@@ -73,68 +81,9 @@ class Notepad extends React.Component {
           <span>Help</span>
         </div>
         <div className="notepad-text-window not-draggable">
-          <span>
-            My name is Per "the sär" Nilsson<br></br>I live in the Sundsvall
-            AKA "The northern darkness" AKA "A regular town in Sweden".
-              <br></br>
-            <br></br>
-            My life philosophy is to do as little as possible and devouring as
-            many things as i can.
-            </span>
+          <textarea>{text}</textarea>
         </div>
-
       </Rnd>
-      // <Draggable
-      //   handle=".toolbar-title"
-      //   disabled={this.state.isfullscreen}
-      //   onStart={() => this.props.active(".notepad-exe")}
-      // >
-      //   <div id="notepad" onClick={() => this.props.active(".notepad-exe")}>
-      //     <div className="notepad-toolbar">
-      //       <div className="toolbar-title">
-      //         <span className="toolbar-icon">▇</span>
-      //         <span>Personal information.txt</span>
-      //       </div>
-      //       <div className="toolbar-btn-collection">
-      //         <button
-      //           className="notepad-toolbar-btn minimize-btn"
-      //           onClick={() => this.props.minimize(".notepad-exe")}
-      //         >
-      //           &#8213;
-      //         </button>
-      //         <button
-      //           className="notepad-toolbar-btn maximize-btn"
-      //           onClick={this.handleFullScreenClick}
-      //         >
-      //           {maximizeBtn}
-      //         </button>
-      //         <button
-      //           className="notepad-toolbar-btn close-btn"
-      //           onClick={() => this.props.exit(".notepad-exe")}
-      //         >
-      //           &#10005;
-      //         </button>
-      //       </div>
-      //     </div>
-      //     <div className="toolbar-btn-row">
-      //       <span>File</span>
-      //       <span>Edit</span>
-      //       <span>Format</span>
-      //       <span>View</span>
-      //       <span>Help</span>
-      //     </div>
-      //     <div className="notepad-text-window">
-      //       <span>
-      //         My name is Per "the sär" Nilsson<br></br>I live in the Sundsvall
-      //         AKA "The northern darkness" AKA "A regular town in Sweden".
-      //         <br></br>
-      //         <br></br>
-      //         My life philosophy is to do as little as possible and devouring as
-      //         many things as i can.
-      //       </span>
-      //     </div>
-      //   </div>
-      // </Draggable>
     );
   }
 }

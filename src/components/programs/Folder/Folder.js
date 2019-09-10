@@ -56,9 +56,9 @@ class Folder extends React.Component {
       snake3dActive: false,
       dirtyminiaturesActive: false
     });
-    if (name == "dirtyminiatures") {
+    if (name === "dirtyminiatures") {
       this.setState({ dirtyminiaturesActive: true });
-    } else if (name == "snake3d") {
+    } else if (name === "snake3d") {
       this.setState({ snake3dActive: true });
     }
   }
@@ -72,7 +72,7 @@ class Folder extends React.Component {
         minWidth="580"
         onMouseDown={() => this.props.active(".folder-exe")}
         default={{
-          x: 25,
+          x: 45,
           y: 66,
           width: 700,
           height: 400
@@ -87,10 +87,10 @@ class Folder extends React.Component {
           }
         >
           <div className="folder-toolbar-left-btns">
-            <img src={FolderIco}></img>
+            <img src={FolderIco} alt="folder"></img>
             <div className="folder-toolbar-divider"></div>
-            <img src={FolderPropertiesIco}></img>
-            <img src={FolderIco}></img>
+            <img src={FolderPropertiesIco} alt="folder"></img>
+            <img src={FolderIco} alt="folder"></img>
             <div className="folder-toolbar-divider"></div>
           </div>
           <div className="folder-toolbar-title">My Projects</div>
@@ -189,7 +189,7 @@ class Folder extends React.Component {
               <div className="folder-bread-crums-crums">
                 <div>
                   {" "}
-                  <img src={FolderIco}></img>
+                  <img src={FolderIco} alt="folder"></img>
                 </div>
                 <div>&#xAB;</div>
                 <div>user</div>
@@ -245,14 +245,14 @@ class Folder extends React.Component {
                 this.state.dirtyminiaturesActive ? "folder-icon-active" : ""
               }
             >
-              <img src={chromeIcon}></img>
+              <img src={chromeIcon} alt="folder"></img>
               <span>Dirtyminiatures.html</span>
             </div>
             <div
               onClick={e => this.clickHandler("snake3d", e)}
               className={this.state.snake3dActive ? "folder-icon-active" : ""}
             >
-              <img src={chromeIcon}></img>
+              <img src={chromeIcon} alt="folder"></img>
               <span>Snake3d.html</span>
             </div>
           </div>

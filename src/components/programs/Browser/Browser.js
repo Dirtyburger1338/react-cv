@@ -1,31 +1,29 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "./Browser.css";
-import Iframe from "../../general-components/iframe.js";
 import { Rnd } from "react-rnd";
 import browserIco from "../../../images/shell32_264.ico";
-import browserPropertiesIco from "../../../images/imageres_5367.ico";
-import chromeIcon from "../../../images/Chrome-icon.png";
+// import browserPropertiesIco from "../../../images/imageres_5367.ico";
+// import chromeIcon from "../../../images/Chrome-icon.png";
 import moreSettings from "../../../images/more-settings.svg";
-// import snake3d from "../../../documents/index.html";
 import starFavourite from "../../../images/star-favourite.png";
-// const snake3d = require("../../../documents/3d.html");
 
 class Browser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeTab: "",
+      // activeTab: "",
+      activeWebSite: { name: "", url: null },
       minWidth: 600,
       minHeight: 400,
       x: 710,
       y: 10,
       isfullscreen: false,
-      listOfOpenWebsites: [],
-      src: "../../../documents/3d.html"
+      listOfOpenWebsites: []
     };
     this.listOfWebsites = [
       { name: "DirtyMiniatures", url: "http://dirtyminiatures.com/" },
-      { name: "Snake3d", url: "http://google.com/" }
+      { name: "Snake3d", url: "https://dirtyminiatures.com/game" }
     ];
     //this.listOfOpenWebsites = [];
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
@@ -54,7 +52,7 @@ class Browser extends React.Component {
   }
 
   openNewPage(openedPage) {
-    for (let page of this.listOfWebsites) {
+    this.listOfWebsites.forEach(page => {
       if (page.name.toLowerCase() === openedPage.toLowerCase()) {
         if (
           !this.state.listOfOpenWebsites.some(
@@ -64,43 +62,39 @@ class Browser extends React.Component {
           this.state.listOfOpenWebsites.push(page);
         } else {
         }
-        this.setState({ activeTab: page.name });
+        // this.setState({ activeTab: page.name });
+        this.setState({ activeWebSite: page });
       }
-    }
+    });
   }
   closeTab = pageName => {
     if (this.state.listOfOpenWebsites.length < 2) {
       this.props.exit(".browser-exe");
     } else {
       var remainingTabs = this.state.listOfOpenWebsites.filter(
-        x => x.name != pageName
+        x => x.name !== pageName
       );
-      var newName = remainingTabs[0].name;
-      this.setState(
-        {
-          activeTab: newName + "",
-          listOfOpenWebsites: remainingTabs
-        },
-        () => {
-          console.log("tabs: ", this.state);
-        }
-      );
+      // var newName = remainingTabs[0].name;
+      this.setState({
+        activeWebSite: remainingTabs[0],
+        listOfOpenWebsites: remainingTabs
+      });
+      // this.setState(
+      //   {
+      //     activeTab: newName + "",
+      //     listOfOpenWebsites: remainingTabs
+      //   },
+      //   () => {
+      //     console.log("tabs: ", this.state);
+      //   }
+      // );
     }
   };
+  setupIframeClickHandler = e => {};
 
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
-    var iframeUrl = "";
-    var active = this.state.activeTab;
-    switch (this.state.activeTab.toLowerCase()) {
-      case "dirtyminiatures":
-        iframeUrl = "https://dirtyminiatures.com/";
-        break;
-      case "snake3d":
-        iframeUrl = "https://sogetivisitorclient.z6.web.core.windows.net/";
-        break;
-      default:
-    }
+
     return (
       <Rnd
         id="browser"
@@ -111,7 +105,7 @@ class Browser extends React.Component {
           x: 215,
           y: 26,
           width: 1100,
-          height: 700
+          height: 900
         }}
         cancel=".not-draggable"
       >
@@ -122,11 +116,16 @@ class Browser extends React.Component {
               : "browser-toolbar not-draggable"
           }
         >
+          {!this.state.activeWebSite.url}
           <div className="browser-toolbar-tabs">
             {this.state.listOfOpenWebsites.map(program => (
               <div
                 key={program.name}
-                className={active === program.name ? "active-tab" : ""}
+                className={
+                  this.state.activeWebSite.name === program.name
+                    ? "active-tab"
+                    : ""
+                }
                 onClick={event => {
                   event.stopPropagation();
                   this.openNewPage(program.name);
@@ -208,12 +207,12 @@ class Browser extends React.Component {
             <div>
               <div className="browser-url-area-text">
                 <div>
-                  <img src={browserIco}></img>
+                  <img src={browserIco} alt="icon"></img>
                 </div>
-                <div>{iframeUrl}</div>
+                <div>{this.state.activeWebSite.url}</div>
               </div>
               <div className="browser-url-area-favourite">
-                <img src={starFavourite}></img>
+                <img src={starFavourite} alt="icon"></img>
               </div>
             </div>
           </div>
@@ -222,13 +221,27 @@ class Browser extends React.Component {
               <div>?</div>
             </span>
             <span className="more-settings-icon">
-              <img src={moreSettings}></img>
+              <img src={moreSettings} alt="icon"></img>
             </span>
           </div>
         </div>
-        <div className="browser-display-area">
-          <Iframe title="browser" source={this.state.src} />
-          {/* <iframe src={iframeUrl} title="browser" /> */}
+        <div
+          className="browser-display-area"
+          onMouseDown={() => this.props.active(".browser-exe")}
+        >
+          {/* <div
+            className="clickable-iframe  not-draggable"
+            onMouseDown={() => this.props.active(".browser-exe")}
+          ></div> */}
+          {/* <Iframe title="browser" source={this.state.src} /> */}
+          <iframe
+            id="iFrame"
+            src={this.state.activeWebSite.url}
+            title="browser"
+            onLoad={e => {
+              this.setupIframeClickHandler(e);
+            }}
+          />
           {/* <iframe src={snake3d} /> */}
         </div>
       </Rnd>

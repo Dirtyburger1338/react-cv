@@ -12,8 +12,6 @@ import Taskbar from "./general-components/taskbar/Taskbar";
 import Browser from "./programs/Browser/Browser";
 import StartModal from "./general-components/start-modal/Start-modal";
 
-import { NONAME, resolve } from "dns";
-
 class Windows extends React.Component {
   constructor(props) {
     super(props);
@@ -55,11 +53,9 @@ class Windows extends React.Component {
       this.setActiveWindow(program);
     } else {
       if (window.style.opacity === 0) {
-        console.log("opac")
         this.openAppFromTaskbar(program);
-      }
-      else {
-        this.setActiveWindow(program)
+      } else {
+        this.setActiveWindow(program);
       }
     }
   };
@@ -67,53 +63,41 @@ class Windows extends React.Component {
     const node = ReactDOM.findDOMNode(this);
     let programNode = node.querySelector(program);
     let window = programNode.querySelector(":scope > div");
-
     if (window.style.opacity === "0") {
       let taskbarNodes = node.querySelectorAll(
         ".taskbar-active-programs > div"
       );
 
-      for (let node of taskbarNodes) {
+      taskbarNodes.forEach(node => {
         if (node.classList.contains("task-" + program)) {
           let coordsItem = this.getCoords(program);
           window.style.display = "flex";
 
-          function animate() {
-            return new Promise((resolve, reject) => {
-              window.style.transform =
-                "translate(" +
-                coordsItem.x +
-                "px ," +
-                coordsItem.y +
-                "px ) scale(1)";
-              window.style.opacity = "1";
-              setTimeout(() => {
-                resolve(true);
-              }, 300);
+          setTimeout(function() {
+            animate(coordsItem).then(x => {
+              window.style.transition = "none";
             });
-          }
-          setTimeout(
-            function () {
-              animate().then(x => {
-                window.style.transition = "none";
-              });
-            }.bind(this),
-            1
-          );
-
-          // setTimeout(() => {
-          //   animate().then(x => {
-          //     window.style.transition = "none";
-          //     console.log(window.style.transition)
-          //   })
-          // }, 1);
+          }, 1);
         }
-      }
+      });
 
       this.setActiveWindow(program);
     } else {
-      this.setActiveWindow(program);
-      this.minimizeAppFromToolbar(program);
+      if (programNode.classList.contains("program-window-front")) {
+        this.minimizeAppFromToolbar(program);
+      } else {
+        this.setActiveWindow(program);
+      }
+    }
+    function animate(coordsItem) {
+      return new Promise((resolve, reject) => {
+        window.style.transform =
+          "translate(" + coordsItem.x + "px ," + coordsItem.y + "px ) scale(1)";
+        window.style.opacity = "1";
+        setTimeout(() => {
+          resolve(true);
+        }, 300);
+      });
     }
   };
 
@@ -131,7 +115,8 @@ class Windows extends React.Component {
     let programNode = node.querySelector(program);
     let window = programNode.querySelector(":scope > div");
     let taskbarNodes = node.querySelectorAll(".taskbar-active-programs > div");
-    for (let node of taskbarNodes) {
+
+    taskbarNodes.forEach(node => {
       if (node.classList.contains("task-" + program)) {
         let taskbarCoords = node.getBoundingClientRect();
         let programwindow = window.getBoundingClientRect();
@@ -174,7 +159,7 @@ class Windows extends React.Component {
           window.style.display = "none";
         }, 300);
       }
-    }
+    });
   };
   maximizeAppFromToolbar = program => {
     const node = ReactDOM.findDOMNode(this);
@@ -187,15 +172,15 @@ class Windows extends React.Component {
     programNode.classList.remove("program-fullscreen");
   };
   setActiveWindow = program => {
+    console.log(program);
     const node = ReactDOM.findDOMNode(this);
-
     let programNode = node.querySelector(program);
     if (!programNode.classList.contains("program-window-front")) {
       let AllPrograms = node.querySelectorAll(".program");
-      for (let prog of AllPrograms) {
+      AllPrograms.forEach(prog => {
         prog.classList.remove("program-window-front");
         prog.classList.add("program-window-back");
-      }
+      });
       programNode.classList.remove("program-window-back");
       programNode.classList.add("program-window-front");
     }
@@ -228,18 +213,18 @@ class Windows extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-        this.clicks[this.clicks.length - 2] <
-        200
+          this.clicks[this.clicks.length - 2] <
+          200
       ) {
         this.openApp(state);
       }
     }, 250);
   }
-  openShortcut = (shortcut) => {
-    this.browser.current.openNewPage(shortcut)
+  openShortcut = shortcut => {
+    this.browser.current.openNewPage(shortcut);
     this.openApp(".browser-exe");
     this.taskbar.current.setActive(".browser-exe");
-  }
+  };
   render() {
     //this.props.stateChange(state)
 
@@ -254,7 +239,7 @@ class Windows extends React.Component {
             tabIndex="0"
           >
             <div>
-              <img src={cmdIcon}></img>
+              <img src={cmdIcon} alt="cmd-icon"></img>
             </div>
             <div>Run skills batch job</div>
           </div>
@@ -265,7 +250,7 @@ class Windows extends React.Component {
             onClick={e => this.clickHandler(".notepad-exe", e)}
           >
             <div>
-              <img src={noteIcon}></img>
+              <img src={noteIcon} alt="notepad-icon"></img>
             </div>
             <div>Per Nilsson bio</div>
           </div>
@@ -276,7 +261,7 @@ class Windows extends React.Component {
             onClick={e => this.clickHandler(".folder-exe", e)}
           >
             <div>
-              <img src={folderIcon}></img>
+              <img src={folderIcon} alt="folder-icon"></img>
             </div>
             <div>Projects</div>
           </div>

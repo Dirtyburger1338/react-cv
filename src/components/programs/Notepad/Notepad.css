@@ -4,7 +4,7 @@
   pointer-events: all;
   z-index: 9;
   display: flex !important;
-  cursor: default !important;  
+  cursor: default !important;
   flex-direction: column;
 }
 .notepad-text-window {
@@ -14,10 +14,19 @@
   color: #000000;
   font-size: 14px;
   font-family: consolas;
-  overflow: scroll;
+  overflow-x: scroll;
+  /* overflow: hidden; */
+  /* overflow: scroll; */
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+.notepad-text-window textarea {
+  height: 200vh;
+  border: none;
+  width: 200vw;
+  resize: none;
+  overflow: hidden;
 }
 .notepad-toolbar {
   background-color: #ffffff;

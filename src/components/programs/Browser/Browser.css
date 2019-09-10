@@ -10,7 +10,14 @@
     0 10px 10px -5px rgba(0, 0, 0, 0.21);
   cursor: default !important;
 }
-
+.clickable-iframe {
+  position: fixed;
+  /* height: 100%; */
+  width: 100%;
+  bottom: 0;
+  top: 0;
+  background-color: #ff000057;
+}
 .browser-toolbar {
   background-color: #e7e8ea;
   color: #000000e0;
@@ -34,7 +41,7 @@
   background-color: #c9c8c8;
 }
 .browser-toolbar-btn:hover {
-  background-color: #e6e6e6;
+  background-color: #d1d0d0;
   color: #000000;
 }
 .browser-toolbar-btn:last-child:hover {
