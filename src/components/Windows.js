@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import "./Windows.css";
 import ReactDOM from "react-dom";
 
@@ -11,6 +11,8 @@ import noteIcon from "./../images/note-icon.ico";
 import Taskbar from "./general-components/taskbar/Taskbar";
 import Browser from "./programs/Browser/Browser";
 import StartModal from "./general-components/start-modal/Start-modal";
+
+import { ProgramProvider } from './general-components/programContext';
 
 class Windows extends React.Component {
   constructor(props) {
@@ -73,7 +75,7 @@ class Windows extends React.Component {
           let coordsItem = this.getCoords(program);
           window.style.display = "flex";
 
-          setTimeout(function() {
+          setTimeout(function () {
             animate(coordsItem).then(x => {
               window.style.transition = "none";
             });
@@ -213,8 +215,8 @@ class Windows extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-          this.clicks[this.clicks.length - 2] <
-          200
+        this.clicks[this.clicks.length - 2] <
+        200
       ) {
         this.openApp(state);
       }
@@ -266,51 +268,52 @@ class Windows extends React.Component {
             <div>Projects</div>
           </div>
         </div>
-
-        <div className="program cmd-exe">
-          <Cmd
-            exit={this.closeAppFromToolbar}
-            maximize={this.maximizeAppFromToolbar}
-            normalize={this.undoMaximizeAppFromToolbar}
-            minimize={this.minimizeAppFromToolbar}
-            active={this.setActiveWindow}
-          ></Cmd>
-        </div>
-        <div className="program notepad-exe">
-          <Notepad
-            exit={this.closeAppFromToolbar}
-            maximize={this.maximizeAppFromToolbar}
-            normalize={this.undoMaximizeAppFromToolbar}
-            minimize={this.minimizeAppFromToolbar}
-            active={this.setActiveWindow}
-          ></Notepad>
-        </div>
-        <div className="program folder-exe">
-          <Folder
-            exit={this.closeAppFromToolbar}
-            maximize={this.maximizeAppFromToolbar}
-            normalize={this.undoMaximizeAppFromToolbar}
-            minimize={this.minimizeAppFromToolbar}
-            active={this.setActiveWindow}
-            shortcutOpened={this.openShortcut}
-          ></Folder>
-        </div>
-        <div className="program browser-exe">
-          <Browser
-            ref={this.browser}
-            exit={this.closeAppFromToolbar}
-            maximize={this.maximizeAppFromToolbar}
-            normalize={this.undoMaximizeAppFromToolbar}
-            minimize={this.minimizeAppFromToolbar}
-            active={this.setActiveWindow}
-          ></Browser>
-        </div>
-        {/* <iframe src="http://dirtyminiatures.com/" height="500" width="500" /> */}
-        <Taskbar
-          ref={this.taskbar}
-          OpenPrograms={this.state.OpenPrograms}
-          taskbarItemClicked={this.openAppFromTaskbar}
-        ></Taskbar>
+        <ProgramProvider>
+          <div className="program cmd-exe">
+            <Cmd
+              exit={this.closeAppFromToolbar}
+              maximize={this.maximizeAppFromToolbar}
+              normalize={this.undoMaximizeAppFromToolbar}
+              minimize={this.minimizeAppFromToolbar}
+              active={this.setActiveWindow}
+            ></Cmd>
+          </div>
+          <div className="program notepad-exe">
+            <Notepad
+              exit={this.closeAppFromToolbar}
+              maximize={this.maximizeAppFromToolbar}
+              normalize={this.undoMaximizeAppFromToolbar}
+              minimize={this.minimizeAppFromToolbar}
+              active={this.setActiveWindow}
+            ></Notepad>
+          </div>
+          <div className="program folder-exe">
+            <Folder
+              exit={this.closeAppFromToolbar}
+              maximize={this.maximizeAppFromToolbar}
+              normalize={this.undoMaximizeAppFromToolbar}
+              minimize={this.minimizeAppFromToolbar}
+              active={this.setActiveWindow}
+              shortcutOpened={this.openShortcut}
+            ></Folder>
+          </div>
+          <div className="program browser-exe">
+            <Browser
+              ref={this.browser}
+              exit={this.closeAppFromToolbar}
+              maximize={this.maximizeAppFromToolbar}
+              normalize={this.undoMaximizeAppFromToolbar}
+              minimize={this.minimizeAppFromToolbar}
+              active={this.setActiveWindow}
+            ></Browser>
+          </div>
+          {/* <iframe src="http://dirtyminiatures.com/" height="500" width="500" /> */}
+          <Taskbar
+            ref={this.taskbar}
+            OpenPrograms={this.state.OpenPrograms}
+            taskbarItemClicked={this.openAppFromTaskbar}
+          ></Taskbar>
+        </ProgramProvider>
       </div>
     );
   }

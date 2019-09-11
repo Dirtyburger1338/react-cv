@@ -251,11 +251,9 @@
 img {
   height: 14px;
 }
-.browser-display-area {
-  flex: 1;
-}
-.browser-display-area iframe {
-  width: 100%;
+#iframe {
+ 
   border: none;
-  height: 100%;
+ 
+  flex: 1 1 0%;
 }

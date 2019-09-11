@@ -81,7 +81,7 @@ class Notepad extends React.Component {
           <span>Help</span>
         </div>
         <div className="notepad-text-window not-draggable">
-          <textarea>{text}</textarea>
+          <textarea defaultValue={text}></textarea>
         </div>
       </Rnd>
     );

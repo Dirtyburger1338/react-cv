@@ -64,6 +64,9 @@ class Browser extends React.Component {
         }
         // this.setState({ activeTab: page.name });
         this.setState({ activeWebSite: page });
+        let browser = document.getElementById("iFrame");
+        browser.style.position = "unset";
+        browser.style.position = "relative";
       }
     });
   }
@@ -74,23 +77,14 @@ class Browser extends React.Component {
       var remainingTabs = this.state.listOfOpenWebsites.filter(
         x => x.name !== pageName
       );
-      // var newName = remainingTabs[0].name;
       this.setState({
         activeWebSite: remainingTabs[0],
         listOfOpenWebsites: remainingTabs
       });
-      // this.setState(
-      //   {
-      //     activeTab: newName + "",
-      //     listOfOpenWebsites: remainingTabs
-      //   },
-      //   () => {
-      //     console.log("tabs: ", this.state);
-      //   }
-      // );
+
     }
   };
-  setupIframeClickHandler = e => {};
+  setupIframeClickHandler = e => { };
 
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
@@ -225,25 +219,20 @@ class Browser extends React.Component {
             </span>
           </div>
         </div>
-        <div
+        {/* <div
           className="browser-display-area"
           onMouseDown={() => this.props.active(".browser-exe")}
-        >
-          {/* <div
-            className="clickable-iframe  not-draggable"
-            onMouseDown={() => this.props.active(".browser-exe")}
-          ></div> */}
-          {/* <Iframe title="browser" source={this.state.src} /> */}
-          <iframe
-            id="iFrame"
-            src={this.state.activeWebSite.url}
-            title="browser"
-            onLoad={e => {
-              this.setupIframeClickHandler(e);
-            }}
-          />
-          {/* <iframe src={snake3d} /> */}
-        </div>
+        > */}
+        <iframe
+          id="iFrame"
+          src={this.state.activeWebSite.url}
+          title="browser"
+          onLoad={e => {
+            this.setupIframeClickHandler(e);
+          }}
+        />
+        {/* <iframe src={snake3d} /> */}
+        {/* </div> */}
       </Rnd>
     );
   }
