@@ -17,8 +17,11 @@
 .active-program {
   z-index: 10;
 }
+.open-program {
+  display: block !important;
+}
 .cmd-exe {
-  display: none;
+  /* display: none; */
   position: absolute;
   top: 0;
   left: 0;
@@ -27,7 +30,7 @@
   pointer-events: none;
 }
 .browser-exe {
-  display: none;
+  /* display: none; */
   position: absolute;
   top: 0;
   left: 0;
@@ -36,7 +39,7 @@
   pointer-events: none;
 }
 .folder-exe {
-  display: none;
+  /* display: none; */
   position: absolute;
   top: 0;
   left: 0;
@@ -45,7 +48,7 @@
   pointer-events: none;
 }
 .notepad-exe {
-  display: none;
+  /* display: none; */
   position: absolute;
   top: 0;
   left: 0;

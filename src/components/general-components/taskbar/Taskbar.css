@@ -10,29 +10,40 @@
   height: 34px;
   color: white;
   border: 1px solid #444444c7;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24), 0 10px 10px -5px rgba(0, 0, 0, 0.21);
-
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
+    0 10px 10px -5px rgba(0, 0, 0, 0.21);
 }
 .taskbar-active-programs {
   display: flex;
   flex: 1;
 }
+
 .taskbar-active-programs > div {
   width: 160px;
   display: flex;
-  justify-content: center;
   position: relative;
   align-items: center;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
+.taskbar-btn-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 12px;
+}
+.taskbar-active-programs > div img {
+  padding: 0 4px;
+  height: 23px;
+}
 .taskbar-active-programs > div:hover {
   background-color: #4e4e4ec9;
 }
 .taskbar-active-programs > div:hover .bottom-border {
   left: 0;
-  right:0;
+  right: 0;
 }
 .taskbar-clock {
   font-size: 12px;
@@ -46,13 +57,13 @@
   -ms-user-select: none; /* IE 10+ */
   user-select: none;
 }
-.bottom-border{
+.bottom-border {
   bottom: 0;
   position: absolute;
   border-bottom: 2px solid #5cb0e4;
   left: 3px;
-  right:3px;
-  transition:all 0.1s linear;
+  right: 3px;
+  transition: all 0.1s linear;
 }
 .taskbar-clock:hover {
   background-color: rgba(37, 35, 37, 0.836);
@@ -60,20 +71,20 @@
 .active {
   background-color: #444444c9;
 }
-.active .bottom-border{
-  left:0;
+.active .bottom-border {
+  left: 0;
   right: 0;
 }
 .taskbar-startmenu-btn {
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   padding: 2px;
   height: 34px;
   width: 36px;
   margin: 0;
 }
-.taskbar-search-btn{
-  background-color: rgba(0,0,0,0);
+.taskbar-search-btn {
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   padding: 2px;
   height: 34px;
@@ -85,10 +96,10 @@
   width: 21px;
 }
 .taskbar-search-btn:hover {
-  background-color: rgba(68, 67, 68, 0.8)
+  background-color: rgba(68, 67, 68, 0.8);
 }
 .taskbar-startmenu-btn:hover {
-  background-color: rgba(68, 67, 68, 0.8)
+  background-color: rgba(68, 67, 68, 0.8);
 }
 .taskbar-startmenu-btn:active {
   background-color: rgb(17, 16, 17);
