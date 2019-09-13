@@ -20,6 +20,9 @@
 .open-program {
   display: block !important;
 }
+.program-content {
+  flex: 1;
+}
 .cmd-exe {
   /* display: none; */
   position: absolute;

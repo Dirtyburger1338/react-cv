@@ -66,9 +66,9 @@ class Taskbar extends React.Component {
                     (program.active ? "active" : "inactive")
                   }
                   key={program.id}
-                  // onClick={() => this.props.taskbarItemClicked(program)}
+                  onClick={() => this.props.taskbarItemClicked(program)}
                 >
-                  <div>
+                  <div className={"task-" + program.id}>
                     <div className="taskbar-btn-text">
                       <img src={program.icon}></img>
                       <span>
@@ -105,7 +105,7 @@ class Taskbar extends React.Component {
         </div>
 
         <div className="taskbar-clock">
-          <span>{this.state.clock}</span>
+          <span></span>
         </div>
       </div>
     );

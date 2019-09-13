@@ -1,6 +1,6 @@
 import React from "react";
 import { Rnd } from "react-rnd";
-import { ProgramContext } from "../../general-components/programContext";
+import { ProgramContext } from "../general-components/programContext";
 import ReactDOM from "react-dom";
 
 class Program extends React.Component {
@@ -14,6 +14,7 @@ class Program extends React.Component {
       y: 10,
       isfullscreen: false
     };
+    console.log(this.props.program);
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
   }
   handleFullScreenClick() {
@@ -28,7 +29,7 @@ class Program extends React.Component {
 
   setActive() {
     let state = this.context.programs.map(x => {
-      if (x.tag === "Cmd") {
+      if (x.tag === this.props.program.tag) {
         x.active = true;
       } else {
         x.active = false;
@@ -69,7 +70,7 @@ class Program extends React.Component {
         if (currentTransformFromDraggable) {
           draggableX = currentTransformFromDraggable[0];
           draggableY = currentTransformFromDraggable[1];
-
+          this.context.setCoords(this.props.program, draggableX, draggableY);
           //this.setCoords(program, draggableX, draggableY);
         }
 
@@ -100,9 +101,10 @@ class Program extends React.Component {
   }
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
+    var ComponentClass = this.props.program.class;
     return (
       <Rnd
-        id="cmd"
+        id={this.props.program.id}
         className={this.state.isfullscreen ? "program-fullscreen" : ""}
         minHeight="100"
         minWidth="300"
@@ -122,8 +124,8 @@ class Program extends React.Component {
           }
         >
           <div className="toolbar-title">
-            <span className="toolbar-icon">▇</span>
-            <span>Command Prompt</span>
+            <img src={this.props.program.icon} className="toolbar-icon"></img>
+            <span>{this.props.program.name}</span>
           </div>
           <div className="toolbar-btn-collection not-draggable">
             <button
@@ -148,60 +150,10 @@ class Program extends React.Component {
             </button>
           </div>
         </div>
-        <div className="cmd-text-window not-draggable">
-          <span>
-            Microsoft Windows [Version 10.0.016729.1087]<br></br>
-            (c)2017 Microsoft Corporation. All rights reserved.
-            <br></br>
-            <br></br>
-            C:\Users\Guest
-          </span>
+        <div className="program-content not-draggable">
+          <ComponentClass />
         </div>
       </Rnd>
-      // <Draggable
-      //   handle=".toolbar-title"
-      //   disabled={this.state.isfullscreen}
-      //   onStart={() => this.props.active(".cmd-exe")}
-      // >
-
-      //   <div id="cmd" onClick={() => this.props.active(".cmd-exe")}>
-      //     <div className="toolbar">
-      //       <div className="toolbar-title">
-      //         <span className="toolbar-icon">▇</span>
-      //         <span>Command Prompt</span>
-      //       </div>
-      //       <div className="toolbar-btn-collection">
-      //         <button
-      //           className="toolbar-btn minimize-btn"
-      //           onClick={() => this.props.minimize(".cmd-exe")}
-      //         >
-      //           &#8213;
-      //         </button>
-      //         <button
-      //           className="toolbar-btn maximize-btn"
-      //           onClick={this.handleFullScreenClick}
-      //         >
-      //           {maximizeBtn}
-      //         </button>
-      //         <button
-      //           className="toolbar-btn close-btn"
-      //           onClick={() => this.props.exit(".cmd-exe")}
-      //         >
-      //           &#10005;
-      //         </button>
-      //       </div>
-      //     </div>
-      //     <div className="cmd-text-window">
-      //       <span>
-      //         Microsoft Windows [Version 10.0.016729.1087]<br></br>
-      //         (c)2017 Microsoft Corporation. All rights reserved.
-      //         <br></br>
-      //         <br></br>
-      //         C:\Users\Guest
-      //       </span>
-      //     </div>
-      //   </div>
-      // </Draggable>
     );
   }
 }

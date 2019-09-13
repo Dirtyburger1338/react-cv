@@ -11,7 +11,7 @@ import noteIcon from "./../images/note-icon.ico";
 import Taskbar from "./general-components/taskbar/Taskbar";
 import Browser from "./programs/Browser/Browser";
 import StartModal from "./general-components/start-modal/Start-modal";
-
+import Program from "./programs/program";
 import ProgramContextProvider from "./general-components/programContext";
 import { ProgramContext } from "./general-components/programContext";
 
@@ -52,11 +52,9 @@ class Windows extends React.Component {
   openAppFromIcon = program => {
     program.open = true;
     program.active = true;
-    console.log(this.context.programs);
     let state = this.context.programs.map(x => {
       return x.id === program.id ? program : x;
     });
-    console.log(state);
 
     this.context.setPrograms(state);
     // const node = ReactDOM.findDOMNode(this);
@@ -78,16 +76,20 @@ class Windows extends React.Component {
     // }
   };
   openAppFromTaskbar = program => {
+    console.log(program);
     const node = ReactDOM.findDOMNode(this);
-    let programNode = node.querySelector(program);
+    let programNode = node.querySelector("." + program.tag);
     let window = programNode.querySelector(":scope > div");
+    console.log(node);
+    console.log(programNode);
+    console.log(window);
     if (window.style.opacity === "0") {
       let taskbarNodes = node.querySelectorAll(
         ".taskbar-active-programs > div"
       );
 
       taskbarNodes.forEach(node => {
-        if (node.classList.contains("task-" + program)) {
+        if (node.classList.contains("task-" + program.id)) {
           let coordsItem = this.getCoords(program);
           window.style.display = "flex";
 
@@ -101,10 +103,15 @@ class Windows extends React.Component {
 
       this.setActiveWindow(program);
     } else {
-      if (programNode.classList.contains("program-window-front")) {
+      if (program.active) {
         this.minimizeAppFromToolbar(program);
       } else {
-        this.setActiveWindow(program);
+        program.active = true;
+        let state = this.context.programs.map(x => {
+          return x.id === program.id ? program : x;
+        });
+
+        this.context.setPrograms(state);
       }
     }
     function animate(coordsItem) {
@@ -229,7 +236,6 @@ class Windows extends React.Component {
 
   //Single or Double click navigator
   clickHandler(state, e) {
-    console.log(state);
     e.persist();
     e.preventDefault();
     this.clicks.push(new Date().getTime());
@@ -253,11 +259,11 @@ class Windows extends React.Component {
   render() {
     //this.props.stateChange(state)
     const programs = this.context.programs;
-    const SomeComponent = () => (
-      <span>
-        <Taskbar />
-      </span>
-    );
+    // const SomeComponent = () => (
+    //   <span>
+    //     <Taskbar />
+    //   </span>
+    // );
     return (
       <div id="Menu-page" className="module-page">
         <StartModal></StartModal>
@@ -315,16 +321,26 @@ class Windows extends React.Component {
 
         {programs.map(program => {
           if (program.open) {
-            const TagName = this.programTags[program.tag];
             return (
-              <div className={"program " + program.tag} key={program.tag}>
-                <TagName
+              <div
+                className={
+                  "program " +
+                  program.tag +
+                  " " +
+                  (program.active
+                    ? "program-window-front"
+                    : "program-window-back")
+                }
+                key={program.tag}
+              >
+                <Program program={program}></Program>
+                {/* <TagName
                   exit={this.closeAppFromToolbar}
                   maximize={this.maximizeAppFromToolbar}
                   normalize={this.undoMaximizeAppFromToolbar}
                   minimize={this.minimizeAppFromToolbar}
                   active={this.setActiveWindow}
-                ></TagName>
+                ></TagName> */}
               </div>
             );
           }
@@ -376,11 +392,11 @@ class Windows extends React.Component {
             ></Browser>
           </div> */}
         {/* <iframe src="http://dirtyminiatures.com/" height="500" width="500" /> */}
-        <SomeComponent
+        <Taskbar
           // ref={this.taskbar}
           OpenPrograms={this.state.OpenPrograms}
           taskbarItemClicked={this.openAppFromTaskbar}
-        ></SomeComponent>
+        />
       </div>
     );
   }
