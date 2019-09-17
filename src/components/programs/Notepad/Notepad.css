@@ -7,6 +7,9 @@
   cursor: default !important;
   flex-direction: column;
 }
+.notepad-wrapper{
+  height: 500px;
+}
 .notepad-text-window {
   padding: 2px;
   height: 100%;
@@ -22,13 +25,13 @@
   user-select: none;
 }
 .notepad-text-window textarea {
-  height: 200vh;
+  height: 700px;
   border: none;
-  width: 200vw;
+  width: 1200px;
   resize: none;
   overflow: hidden;
 }
-.notepad-toolbar {
+/* .notepad-toolbar {
   background-color: #ffffff;
   color: #000000e0;
   display: flex;
@@ -44,7 +47,6 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  /* z-index: 10; */
 }
 .notepad-toolbar-btn:active {
   background-color: #c9c8c8;
@@ -63,7 +65,7 @@
   display: flex;
   align-items: center;
   line-height: 15px;
-}
+} */
 .toolbar-btn-row {
   color: #00000091;
   font-size: 12px;

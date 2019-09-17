@@ -1,8 +1,5 @@
 import React from "react";
 import "./Cmd.css";
-import { Rnd } from "react-rnd";
-import { ProgramContext } from "../../general-components/programContext";
-import ReactDOM from "react-dom";
 
 class Cmd extends React.Component {
   render() {

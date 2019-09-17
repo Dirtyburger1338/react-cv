@@ -10,18 +10,12 @@ class Taskbar extends React.Component {
       clock: ""
     };
   }
-  updateName = e => {
-    //this.setName(e)
-  };
-  updateActive = e => {
-    //this.setActive(e)
-  };
   componentDidMount = () => {
-    // this.getClockTime();
-    // var intervalId = setInterval(() => {
-    //   this.getClockTime();
-    // }, 1000);
-    // this.setState({ intervalId: intervalId });
+    this.getClockTime();
+    var intervalId = setInterval(() => {
+      this.getClockTime();
+    }, 1000);
+    this.setState({ intervalId: intervalId });
   };
   componentWillUnmount = () => {
     clearInterval(this.state.intervalId);
@@ -32,6 +26,12 @@ class Taskbar extends React.Component {
   getClockTime = () => {
     this.setState({ clock: new Date().toTimeString().slice(0, 5) });
   };
+  taskClicked = (e, program) => {
+    // e.persist()
+    // console.log(e)
+    this.context.openAppFromTaskbar(program, e.clientX, e.clientY);
+  }
+
   render() {
     var programs = this.context.programs;
 
@@ -58,6 +58,7 @@ class Taskbar extends React.Component {
           {programs.map(program => {
             if (program.open) {
               return (
+
                 <div
                   className={
                     "task-" +
@@ -66,7 +67,9 @@ class Taskbar extends React.Component {
                     (program.active ? "active" : "inactive")
                   }
                   key={program.id}
-                  onClick={() => this.props.taskbarItemClicked(program)}
+                  onClick={(e) => this.props.taskbarItemClicked(e, program)}
+                // onClick={() => this.context.openAppFromTaskbar(program)}
+                //onClick={(e) => this.taskClicked(e, program)}
                 >
                   <div className={"task-" + program.id}>
                     <div className="taskbar-btn-text">
@@ -81,31 +84,10 @@ class Taskbar extends React.Component {
               );
             }
           })}
-          {/* {this.props.OpenPrograms.map(program => (
-            <div
-              className={
-                "task-" +
-                program +
-                " " +
-                (this.state.activeProgram === program ? "active" : "inactive")
-              }
-              key={program}
-              onClick={() => this.props.taskbarItemClicked(program)}
-            >
-              <div>
-                <div>
-                  <span>Ico {this.props.ActiveProgram} </span>
-                  <span>{program}</span>
-                </div>
-
-              </div>
-              <div className="bottom-border"></div>
-            </div>
-          ))} */}
         </div>
 
         <div className="taskbar-clock">
-          <span></span>
+          <span>{this.state.clock}</span>
         </div>
       </div>
     );

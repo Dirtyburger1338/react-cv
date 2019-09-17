@@ -42,7 +42,7 @@ class Windows extends React.Component {
     this.browser = React.createRef();
 
     this.openAppFromIcon = this.openAppFromIcon.bind(this);
-    this.closeAppFromToolbar = this.closeAppFromToolbar.bind(this);
+    //this.closeAppFromToolbar = this.closeAppFromToolbar.bind(this);
     this.minimizeAppFromToolbar = this.minimizeAppFromToolbar.bind(this);
     this.render = this.render.bind(this);
     this.clicks = [];
@@ -75,33 +75,46 @@ class Windows extends React.Component {
     //   }
     // }
   };
-  openAppFromTaskbar = program => {
+  setActive(program) {
+    var programs = this.context.programs.map(x => {
+      if (x.id === program.id) {
+        x.active = true;
+      }
+      else {
+        x.active = false;
+      }
+      return x;
+    });
+    this.context.setPrograms(programs);
+  }
+  openAppFromTaskbar = (e, program) => {
     console.log(program);
     const node = ReactDOM.findDOMNode(this);
-    let programNode = node.querySelector("." + program.tag);
-    let window = programNode.querySelector(":scope > div");
+    let programWrapper = node.querySelector("." + program.tag);
+    let programWindow = programWrapper.querySelector(":scope > div");
     console.log(node);
-    console.log(programNode);
-    console.log(window);
-    if (window.style.opacity === "0") {
+    console.log(programWrapper);
+    console.log(programWindow);
+    if (programWindow.style.opacity === "0") {
+      //-----------Handle coords 
       let taskbarNodes = node.querySelectorAll(
         ".taskbar-active-programs > div"
       );
 
       taskbarNodes.forEach(node => {
         if (node.classList.contains("task-" + program.id)) {
-          let coordsItem = this.getCoords(program);
-          window.style.display = "flex";
+          // let coordsItem = this.getCoords(program);
+          programWindow.style.display = "flex";
 
-          setTimeout(function() {
-            animate(coordsItem).then(x => {
-              window.style.transition = "none";
+          setTimeout(function () {
+            animate(program).then(x => {
+              programWindow.style.transition = "none";
             });
           }, 1);
         }
       });
-
-      this.setActiveWindow(program);
+      this.setActive(program);
+      // this.setActiveWindow(program);
     } else {
       if (program.active) {
         this.minimizeAppFromToolbar(program);
@@ -114,35 +127,41 @@ class Windows extends React.Component {
         this.context.setPrograms(state);
       }
     }
-    function animate(coordsItem) {
+
+
+    function animate(program) {
       return new Promise((resolve, reject) => {
-        window.style.transform =
-          "translate(" + coordsItem.x + "px ," + coordsItem.y + "px ) scale(1)";
-        window.style.opacity = "1";
+        programWindow.style.transform =
+          "translate(" + program.x + "px ," + program.y + "px ) scale(1)";
+        programWindow.style.opacity = "1";
         setTimeout(() => {
           resolve(true);
         }, 300);
       });
     }
+
+
   };
 
-  closeAppFromToolbar = program => {
-    const node = ReactDOM.findDOMNode(this);
-    let programNode = node.querySelector(program);
-    programNode.style.display = "none";
-    let list = this.state.OpenPrograms;
-    let idx = list.indexOf(program);
-    list.splice(idx, 1);
-    this.setState({ OpenPrograms: list });
-  };
+  // closeAppFromToolbar = program => {
+  //   const node = ReactDOM.findDOMNode(this);
+  //   let programNode = node.querySelector(program);
+  //   programNode.style.display = "none";
+  //   let list = this.state.OpenPrograms;
+  //   let idx = list.indexOf(program);
+  //   list.splice(idx, 1);
+  //   this.setState({ OpenPrograms: list });
+  // };
+
   minimizeAppFromToolbar = program => {
+    console.log(program.tag)
     const node = ReactDOM.findDOMNode(this);
-    let programNode = node.querySelector(program);
+
+    let programNode = node.querySelector("." + program.tag);
     let window = programNode.querySelector(":scope > div");
     let taskbarNodes = node.querySelectorAll(".taskbar-active-programs > div");
-
     taskbarNodes.forEach(node => {
-      if (node.classList.contains("task-" + program)) {
+      if (node.classList.contains("task-" + program.id)) {
         let taskbarCoords = node.getBoundingClientRect();
         let programwindow = window.getBoundingClientRect();
 
@@ -157,7 +176,8 @@ class Windows extends React.Component {
           draggableX = currentTransformFromDraggable[0];
           draggableY = currentTransformFromDraggable[1];
 
-          this.setCoords(program, draggableX, draggableY);
+          //this.setCoords(program, draggableX, draggableY);
+          this.context.setCoords(program, draggableX, draggableY);
         }
         // console.log(          taskbarCoords.x + " " + programwindow.x + " " + programwindow.width / 4        );
 
@@ -186,16 +206,16 @@ class Windows extends React.Component {
       }
     });
   };
-  maximizeAppFromToolbar = program => {
-    const node = ReactDOM.findDOMNode(this);
-    let programNode = node.querySelector(program);
-    programNode.classList.add("program-fullscreen");
-  };
-  undoMaximizeAppFromToolbar = program => {
-    const node = ReactDOM.findDOMNode(this);
-    let programNode = node.querySelector(program);
-    programNode.classList.remove("program-fullscreen");
-  };
+  // maximizeAppFromToolbar = program => {
+  //   const node = ReactDOM.findDOMNode(this);
+  //   let programNode = node.querySelector(program);
+  //   programNode.classList.add("program-fullscreen");
+  // };
+  // undoMaximizeAppFromToolbar = program => {
+  //   const node = ReactDOM.findDOMNode(this);
+  //   let programNode = node.querySelector(program);
+  //   programNode.classList.remove("program-fullscreen");
+  // };
   setActiveWindow = program => {
     // console.log(program);
     // program.active = true;
@@ -244,8 +264,8 @@ class Windows extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-          this.clicks[this.clicks.length - 2] <
-          200
+        this.clicks[this.clicks.length - 2] <
+        200
       ) {
         this.openApp(state);
       }
@@ -333,7 +353,7 @@ class Windows extends React.Component {
                 }
                 key={program.tag}
               >
-                <Program program={program}></Program>
+                <Program program={program} minimize={this.minimizeAppFromToolbar}></Program>
                 {/* <TagName
                   exit={this.closeAppFromToolbar}
                   maximize={this.maximizeAppFromToolbar}
@@ -393,8 +413,8 @@ class Windows extends React.Component {
           </div> */}
         {/* <iframe src="http://dirtyminiatures.com/" height="500" width="500" /> */}
         <Taskbar
-          // ref={this.taskbar}
-          OpenPrograms={this.state.OpenPrograms}
+          ref={this.taskbar}
+          // OpenPrograms={this.state.OpenPrograms}
           taskbarItemClicked={this.openAppFromTaskbar}
         />
       </div>
