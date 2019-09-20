@@ -26,55 +26,17 @@ class Windows extends React.Component {
       cmdFullScreen: false,
       biosClick: false
     };
-    this.programTags = {
-      Cmd: Cmd,
-      Notepad: Notepad,
-      Folder: Folder,
-      Browser: Browser
-    };
-    this.listOfProgramCoords = [
-      { name: ".cmd-exe", x: "0", y: "0" },
-      { name: ".notepad-exe", x: "0", y: "0" },
-      { name: ".folder-exe", x: "0", y: "0" },
-      { name: ".browser-exe", x: "0", y: "0" }
-    ];
     this.taskbar = React.createRef();
     this.browser = React.createRef();
-
-    this.openAppFromIcon = this.openAppFromIcon.bind(this);
-    //this.closeAppFromToolbar = this.closeAppFromToolbar.bind(this);
-    this.minimizeAppFromToolbar = this.minimizeAppFromToolbar.bind(this);
-    this.render = this.render.bind(this);
     this.clicks = [];
     this.timeout = null;
-    //this.currentlyShowingCallback = this.currentlyShowingCallback.bind(this);
   }
+
   openAppFromIcon = program => {
     program.open = true;
-    program.active = true;
-    let state = this.context.programs.map(x => {
-      return x.id === program.id ? program : x;
-    });
-
-    this.context.setPrograms(state);
-    // const node = ReactDOM.findDOMNode(this);
-    // let programNode = node.querySelector(program);
-    // let window = programNode.querySelector(":scope > div");
-
-    // if (programNode.style.display !== "block") {
-    //   programNode.style.display = "block";
-    //   let list = this.state.OpenPrograms;
-    //   list.push(program);
-    //   this.setState({ OpenPrograms: list });
-    //   this.setActiveWindow(program);
-    // } else {
-    //   if (window.style.opacity === 0) {
-    //     this.openAppFromTaskbar(program);
-    //   } else {
-    //     this.setActiveWindow(program);
-    //   }
-    // }
+    this.setActive(program);
   };
+
   setActive(program) {
     var programs = this.context.programs.map(x => {
       if (x.id === program.id) {
@@ -87,14 +49,12 @@ class Windows extends React.Component {
     });
     this.context.setPrograms(programs);
   }
+
   openAppFromTaskbar = (e, program) => {
-    console.log(program);
     const node = ReactDOM.findDOMNode(this);
     let programWrapper = node.querySelector("." + program.tag);
     let programWindow = programWrapper.querySelector(":scope > div");
-    console.log(node);
-    console.log(programWrapper);
-    console.log(programWindow);
+
     if (programWindow.style.opacity === "0") {
       //-----------Handle coords 
       let taskbarNodes = node.querySelectorAll(
@@ -206,53 +166,11 @@ class Windows extends React.Component {
       }
     });
   };
-  // maximizeAppFromToolbar = program => {
-  //   const node = ReactDOM.findDOMNode(this);
-  //   let programNode = node.querySelector(program);
-  //   programNode.classList.add("program-fullscreen");
-  // };
-  // undoMaximizeAppFromToolbar = program => {
-  //   const node = ReactDOM.findDOMNode(this);
-  //   let programNode = node.querySelector(program);
-  //   programNode.classList.remove("program-fullscreen");
-  // };
-  setActiveWindow = program => {
-    // console.log(program);
-    // program.active = true;
-    // console.log(this.context.programs);
-    // let state = this.context.programs.map(x => {
-    //   return x.id === program.id ? program : x;
-    // });
-    // console.log(state);
-    // this.context.setPrograms(state);
-    // const node = ReactDOM.findDOMNode(this);
-    // let programNode = node.querySelector(program);
-    // if (!programNode.classList.contains("program-window-front")) {
-    //   let AllPrograms = node.querySelectorAll(".program");
-    //   AllPrograms.forEach(prog => {
-    //     prog.classList.remove("program-window-front");
-    //     prog.classList.add("program-window-back");
-    //   });
-    //   programNode.classList.remove("program-window-back");
-    //   programNode.classList.add("program-window-front");
-    // }
-    // this.taskbar.current.setActive(program);
-  };
+
   openApp = program => {
     this.openAppFromIcon(program);
     //this.taskbar.current.setActive(program);
   };
-  getCoords(program) {
-    return this.listOfProgramCoords.find(x => x.name === program);
-  }
-  setCoords(program, x, y) {
-    var foundIndex = this.listOfProgramCoords.findIndex(
-      x => x.name === program
-    );
-
-    this.listOfProgramCoords[foundIndex].y = y;
-    this.listOfProgramCoords[foundIndex].x = x;
-  }
 
   //Single or Double click navigator
   clickHandler(state, e) {
@@ -271,19 +189,16 @@ class Windows extends React.Component {
       }
     }, 250);
   }
+
   openShortcut = shortcut => {
     this.browser.current.openNewPage(shortcut);
     this.openApp(".browser-exe");
     this.taskbar.current.setActive(".browser-exe");
   };
+
   render() {
-    //this.props.stateChange(state)
     const programs = this.context.programs;
-    // const SomeComponent = () => (
-    //   <span>
-    //     <Taskbar />
-    //   </span>
-    // );
+
     return (
       <div id="Menu-page" className="module-page">
         <StartModal></StartModal>
@@ -304,42 +219,8 @@ class Windows extends React.Component {
             </div>
           ))}
         </div>
-        {/* <div
-              id="cmd-btn"
-              className={this.state.cmdActive ? "preview-full" : null}
-              onClick={e => this.clickHandler(".cmd-exe", e)}
-              tabIndex="0"
-            >
-              <div>
-                <img src={cmdIcon} alt="cmd-icon"></img>
-              </div>
-              <div>Run skills batch job</div>
-            </div>
 
-            <div
-              id="notepad-btn"
-              tabIndex="1"
-              onClick={e => this.clickHandler(".notepad-exe", e)}
-            >
-              <div>
-                <img src={noteIcon} alt="notepad-icon"></img>
-              </div>
-              <div>Per Nilsson bio</div>
-            </div>
-
-            <div
-              id="folder-btn"
-              tabIndex="1"
-              onClick={e => this.clickHandler(".folder-exe", e)}
-            >
-              <div>
-                <img src={folderIcon} alt="folder-icon"></img>
-              </div>
-              <div>Projects</div>
-            </div> 
-          </div>*/}
-
-        {programs.map(program => {
+        {programs.map((program, i) => {
           if (program.open) {
             return (
               <div
@@ -353,68 +234,13 @@ class Windows extends React.Component {
                 }
                 key={program.tag}
               >
-                <Program program={program} minimize={this.minimizeAppFromToolbar}></Program>
-                {/* <TagName
-                  exit={this.closeAppFromToolbar}
-                  maximize={this.maximizeAppFromToolbar}
-                  normalize={this.undoMaximizeAppFromToolbar}
-                  minimize={this.minimizeAppFromToolbar}
-                  active={this.setActiveWindow}
-                ></TagName> */}
+                <Program program={program} index={i} minimize={this.minimizeAppFromToolbar}></Program>
               </div>
             );
           }
         })}
-
-        {/* <div className="program cmd-exe">
-            <Cmd
-              exit={this.closeAppFromToolbar}
-              maximize={this.maximizeAppFromToolbar}
-              normalize={this.undoMaximizeAppFromToolbar}
-              minimize={this.minimizeAppFromToolbar}
-              active={this.setActiveWindow}
-            ></Cmd>
-          </div>
-          <div  className={
-                    "task-" +
-                    program.name +
-                    " " +
-                    (this.state.activeProgram === program.name
-                      ? "active"
-                      : "inactive")
-                  }>
-            <Notepad
-              exit={this.closeAppFromToolbar}
-              maximize={this.maximizeAppFromToolbar}
-              normalize={this.undoMaximizeAppFromToolbar}
-              minimize={this.minimizeAppFromToolbar}
-              active={this.setActiveWindow}
-            ></Notepad>
-          </div>
-          <div className="program folder-exe">
-            <Folder
-              exit={this.closeAppFromToolbar}
-              maximize={this.maximizeAppFromToolbar}
-              normalize={this.undoMaximizeAppFromToolbar}
-              minimize={this.minimizeAppFromToolbar}
-              active={this.setActiveWindow}
-              shortcutOpened={this.openShortcut}
-            ></Folder>
-          </div>
-          <div className="program browser-exe">
-            <Browser
-              ref={this.browser}
-              exit={this.closeAppFromToolbar}
-              maximize={this.maximizeAppFromToolbar}
-              normalize={this.undoMaximizeAppFromToolbar}
-              minimize={this.minimizeAppFromToolbar}
-              active={this.setActiveWindow}
-            ></Browser>
-          </div> */}
-        {/* <iframe src="http://dirtyminiatures.com/" height="500" width="500" /> */}
         <Taskbar
           ref={this.taskbar}
-          // OpenPrograms={this.state.OpenPrograms}
           taskbarItemClicked={this.openAppFromTaskbar}
         />
       </div>

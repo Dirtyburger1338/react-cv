@@ -5,6 +5,13 @@
   width: 100%;
   height: 100%;
 }
+.program{
+  position: absolute;
+}
+.program>div{
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
+  0 10px 10px -5px rgba(0, 0, 0, 0.21);
+}
 .program-fullscreen {
   left: 0px !important;
   right: 0px !important;

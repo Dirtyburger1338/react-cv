@@ -18,17 +18,8 @@ class Folder extends React.Component {
       isfullscreen: false
     };
     this.clicks = [];
-    this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
   }
-  handleFullScreenClick() {
-    if (this.state.isfullscreen) {
-      this.setState({ isfullscreen: false });
-      this.props.normalize("#folder");
-    } else {
-      this.props.maximize("#folder");
-      this.setState({ isfullscreen: true });
-    }
-  }
+
 
   //Single or Double click navigator
   clickHandler(state, e) {
@@ -40,8 +31,8 @@ class Folder extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-          this.clicks[this.clicks.length - 2] <
-          300
+        this.clicks[this.clicks.length - 2] <
+        300
       ) {
         this.openShortcut(state);
       }
@@ -64,58 +55,9 @@ class Folder extends React.Component {
   }
 
   render() {
-    var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
-    return (
-      <Rnd
-        id="folder"
-        minHeight="100"
-        minWidth="580"
-        onMouseDown={() => this.props.active(".folder-exe")}
-        default={{
-          x: 45,
-          y: 66,
-          width: 700,
-          height: 400
-        }}
-        cancel=".not-draggable"
-      >
-        <div
-          className={
-            !this.state.isfullscreen
-              ? "folder-toolbar"
-              : "folder-toolbar not-draggable"
-          }
-        >
-          <div className="folder-toolbar-left-btns">
-            <img src={FolderIco} alt="folder"></img>
-            <div className="folder-toolbar-divider"></div>
-            <img src={FolderPropertiesIco} alt="folder"></img>
-            <img src={FolderIco} alt="folder"></img>
-            <div className="folder-toolbar-divider"></div>
-          </div>
-          <div className="folder-toolbar-title">My Projects</div>
 
-          <div className="toolbar-btn-collection not-draggable">
-            <button
-              className="folder-toolbar-btn minimize-btn"
-              onClick={() => this.props.minimize(".folder-exe")}
-            >
-              &#8213;
-            </button>
-            <button
-              className="folder-toolbar-btn maximize-btn"
-              onClick={this.handleFullScreenClick}
-            >
-              {maximizeBtn}
-            </button>
-            <button
-              className="folder-toolbar-btn close-btn"
-              onClick={() => this.props.exit(".folder-exe")}
-            >
-              &#10005;
-            </button>
-          </div>
-        </div>
+    return (
+      <div id="Folder">
         <div className="folder-btn-row not-draggable">
           <span>File</span>
           <span>Edit</span>
@@ -257,7 +199,7 @@ class Folder extends React.Component {
             </div>
           </div>
         </div>
-      </Rnd>
+      </div>
     );
   }
 }

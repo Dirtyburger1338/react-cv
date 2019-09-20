@@ -1,3 +1,8 @@
+#Folder{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 #folder {
   background-color: rgb(255, 255, 255);
   color: rgb(14, 14, 14);
