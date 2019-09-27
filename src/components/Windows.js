@@ -1,22 +1,23 @@
-import React, { createContext } from "react";
+import React from "react";
 import "./Windows.css";
 import ReactDOM from "react-dom";
 
 import Folder from "./programs/Folder/Folder";
-import Cmd from "./programs/Cmd/Cmd";
-import Notepad from "./programs/Notepad/Notepad";
-import folderIcon from "../images/shell32_264.ico";
-import cmdIcon from "./../images/cmd-icon.ico";
-import noteIcon from "./../images/note-icon.ico";
-import Taskbar from "./general-components/taskbar/Taskbar";
 import Browser from "./programs/Browser/Browser";
-import StartModal from "./general-components/start-modal/Start-modal";
+// import Cmd from "./programs/Cmd/Cmd";
+// import Notepad from "./programs/Notepad/Notepad";
+
+// import folderIcon from "../images/shell32_264.ico";
+// import cmdIcon from "./../images/cmd-icon.ico";
+// import noteIcon from "./../images/note-icon.ico";
+
 import Program from "./programs/program";
-import ProgramContextProvider from "./general-components/programContext";
+import Taskbar from "./general-components/taskbar/Taskbar";
+import StartModal from "./general-components/start-modal/Start-modal";
 import { ProgramContext } from "./general-components/programContext";
 
 class Windows extends React.Component {
-  static contextType = ProgramContext;
+  // static contextType = ProgramContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +28,7 @@ class Windows extends React.Component {
       biosClick: false
     };
     this.taskbar = React.createRef();
-    this.browser = React.createRef();
+    //this.browser = React.createRef();
     this.clicks = [];
     this.timeout = null;
   }
@@ -41,8 +42,7 @@ class Windows extends React.Component {
     var programs = this.context.programs.map(x => {
       if (x.id === program.id) {
         x.active = true;
-      }
-      else {
+      } else {
         x.active = false;
       }
       return x;
@@ -56,7 +56,7 @@ class Windows extends React.Component {
     let programWindow = programWrapper.querySelector(":scope > div");
 
     if (programWindow.style.opacity === "0") {
-      //-----------Handle coords 
+      //-----------Handle coords
       let taskbarNodes = node.querySelectorAll(
         ".taskbar-active-programs > div"
       );
@@ -66,7 +66,7 @@ class Windows extends React.Component {
           // let coordsItem = this.getCoords(program);
           programWindow.style.display = "flex";
 
-          setTimeout(function () {
+          setTimeout(function() {
             animate(program).then(x => {
               programWindow.style.transition = "none";
             });
@@ -88,7 +88,6 @@ class Windows extends React.Component {
       }
     }
 
-
     function animate(program) {
       return new Promise((resolve, reject) => {
         programWindow.style.transform =
@@ -99,8 +98,6 @@ class Windows extends React.Component {
         }, 300);
       });
     }
-
-
   };
 
   // closeAppFromToolbar = program => {
@@ -114,7 +111,7 @@ class Windows extends React.Component {
   // };
 
   minimizeAppFromToolbar = program => {
-    console.log(program.tag)
+    console.log(program.tag);
     const node = ReactDOM.findDOMNode(this);
 
     let programNode = node.querySelector("." + program.tag);
@@ -182,8 +179,8 @@ class Windows extends React.Component {
       if (
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
-        this.clicks[this.clicks.length - 2] <
-        200
+          this.clicks[this.clicks.length - 2] <
+          200
       ) {
         this.openApp(state);
       }
@@ -203,21 +200,25 @@ class Windows extends React.Component {
       <div id="Menu-page" className="module-page">
         <StartModal></StartModal>
         <div className="Menu-buttons">
-          {programs.map(program => (
-            <div
-              key={program.id}
-              id={program.id + "-btn"}
-              tabIndex="0"
-              onClick={e => this.clickHandler(program, e)}
-            >
-              <div>
-                <img src={program.icon} alt="icon"></img>
-              </div>
-              <div>
-                {program.name} {program.open ? "y" : "n"}
-              </div>
-            </div>
-          ))}
+          {programs.map(program => {
+            if (program.desktopShortcut) {
+              return (
+                <div
+                  key={program.id}
+                  id={program.id + "-btn"}
+                  tabIndex="0"
+                  onClick={e => this.clickHandler(program, e)}
+                >
+                  <div>
+                    <img src={program.icon} alt="icon"></img>
+                  </div>
+                  <div>
+                    {program.name} {program.open ? "y" : "n"}
+                  </div>
+                </div>
+              );
+            }
+          })}
         </div>
 
         {programs.map((program, i) => {
@@ -234,7 +235,11 @@ class Windows extends React.Component {
                 }
                 key={program.tag}
               >
-                <Program program={program} index={i} minimize={this.minimizeAppFromToolbar}></Program>
+                <Program
+                  program={program}
+                  index={i}
+                  minimize={this.minimizeAppFromToolbar}
+                ></Program>
               </div>
             );
           }
@@ -247,5 +252,5 @@ class Windows extends React.Component {
     );
   }
 }
-
+Windows.contextType = ProgramContext;
 export default Windows;

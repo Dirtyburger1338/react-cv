@@ -9,6 +9,7 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
     0 10px 10px -5px rgba(0, 0, 0, 0.21);
   cursor: default !important;
+  height: 100%;
 }
 .clickable-iframe {
   position: fixed;
@@ -22,7 +23,7 @@
   background-color: #e7e8ea;
   color: #000000e0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 40px;
 }
 .browser-toolbar-btn {
@@ -117,10 +118,12 @@
   height: 100%;
 }
 .browser-toolbar-tabs {
-  position: relative;
+  position: absolute;
+  top: -31px;
   display: flex;
   align-items: flex-end;
-  width: 100%;
+  width: calc(100% - 100px);
+  pointer-events: none;
 }
 .browser-toolbar-tabs > div {
   height: 31px;
@@ -130,6 +133,7 @@
   padding: 0 10px;
   border-radius: 6px 6px 0 0;
   flex-grow: 2;
+  pointer-events: all;
   max-width: 220px;
   justify-content: space-between;
   transition: background-color 0.35s;
@@ -209,9 +213,13 @@
 }
 
 .browser-arrow-btn-container > div {
-  padding: 7px 6px;
+  /* padding: 7px 6px; */
   text-align: center;
-  width: 16px;
+  width: 30px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .browser-search-box {
   min-width: 206px;
@@ -251,9 +259,23 @@
 img {
   height: 14px;
 }
-#iframe {
- 
+
+#browser-program {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#iFrame {
   border: none;
- 
   flex: 1 1 0%;
+}
+.browser-clickable-btn {
+  transition: all 0.3s linear;
+  border-radius: 100%;
+}
+.browser-clickable-btn:hover {
+  background-color: #ececec;
+}
+.browser-clickable-btn svg {
+  fill: #737373;
 }

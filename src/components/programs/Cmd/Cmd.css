@@ -3,26 +3,27 @@
   color: white;
   pointer-events: all;
   z-index: 9;
-  display: flex!important;
+  display: flex !important;
   flex-direction: column;
-  border: 1px solid #444444c7;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
     0 10px 10px -5px rgba(0, 0, 0, 0.21);
-    cursor: default !important;  
-
+  cursor: default !important;
 }
 .cmd-text-window {
   padding: 2px;
-  height: 100%;
+  position: absolute;
   color: #ffffffc4;
   font-size: 14px;
-  flex:1;
+  flex: 1 1;
   font-family: monospace;
   overflow-y: scroll;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 .toolbar-title {
   flex: 1 1;
@@ -35,4 +36,3 @@
 .toolbar-icon {
   margin: 4px 4px 9px 4px;
 }
-

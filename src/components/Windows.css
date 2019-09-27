@@ -5,12 +5,17 @@
   width: 100%;
   height: 100%;
 }
-.program{
+.program {
   position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  pointer-events: none;
 }
-.program>div{
+.program > div {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.24),
-  0 10px 10px -5px rgba(0, 0, 0, 0.21);
+    0 10px 10px -5px rgba(0, 0, 0, 0.21);
 }
 .program-fullscreen {
   left: 0px !important;
@@ -29,6 +34,7 @@
 }
 .program-content {
   flex: 1;
+  position: relative;
 }
 .cmd-exe {
   /* display: none; */
@@ -68,10 +74,21 @@
 }
 .toolbar {
   background-color: #f7f7f7;
-  color: gray;
   display: flex;
   justify-content: space-between;
   height: 32px;
+}
+.program-active {
+  outline: 1px solid #444444c7;
+}
+.program-inactive {
+  outline: 1px solid #ffffffc7;
+}
+.program-active .toolbar {
+  color: rgb(26, 26, 26);
+}
+.program-inactive .toolbar {
+  color: rgb(139, 139, 139);
 }
 .toolbar-btn {
   width: 30px;
@@ -105,6 +122,7 @@
 .program-window-front {
   z-index: 2;
 }
+
 #Menu-page {
   height: 100vh;
   background: url("../images/win-bg.jpg");

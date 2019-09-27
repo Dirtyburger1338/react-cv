@@ -1,4 +1,4 @@
-import React, { useState, useContext, Consumer, Context } from "react";
+import React from "react";
 import "./Taskbar.css";
 import { ProgramContext } from "../programContext";
 class Taskbar extends React.Component {
@@ -30,7 +30,7 @@ class Taskbar extends React.Component {
     // e.persist()
     // console.log(e)
     this.context.openAppFromTaskbar(program, e.clientX, e.clientY);
-  }
+  };
 
   render() {
     var programs = this.context.programs;
@@ -58,7 +58,6 @@ class Taskbar extends React.Component {
           {programs.map(program => {
             if (program.open) {
               return (
-
                 <div
                   className={
                     "task-" +
@@ -67,13 +66,13 @@ class Taskbar extends React.Component {
                     (program.active ? "active" : "inactive")
                   }
                   key={program.id}
-                  onClick={(e) => this.props.taskbarItemClicked(e, program)}
-                // onClick={() => this.context.openAppFromTaskbar(program)}
-                //onClick={(e) => this.taskClicked(e, program)}
+                  onClick={e => this.props.taskbarItemClicked(e, program)}
+                  // onClick={() => this.context.openAppFromTaskbar(program)}
+                  //onClick={(e) => this.taskClicked(e, program)}
                 >
                   <div className={"task-" + program.id}>
                     <div className="taskbar-btn-text">
-                      <img src={program.icon}></img>
+                      <img src={program.icon} alt="img"></img>
                       <span>
                         {program.name} {program.active.toString()}
                       </span>
@@ -82,6 +81,8 @@ class Taskbar extends React.Component {
                   <div className="bottom-border"></div>
                 </div>
               );
+            } else {
+              return null;
             }
           })}
         </div>

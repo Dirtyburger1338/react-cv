@@ -1,19 +1,33 @@
-import React, { useState, createContext, Component } from "react";
-import ReactDOM from "react-dom";
+import React, { createContext, Component } from "react";
 import cmdIcon from "../../images/cmd-icon.ico";
 import noteIcon from "../../images/note-icon.ico";
 import folderIcon from "../../images/shell32_264.ico";
-import Cmd from "../programs/Cmd/Cmd";
-import Notepad from "../programs/Notepad/Notepad";
-import Folder from "../programs/Folder/Folder";
-import Browser from "../programs/Browser/Browser";
+// import Cmd from "../programs/Cmd/Cmd";
+// import Notepad from "../programs/Notepad/Notepad";
+// import Folder from "../programs/Folder/Folder";
+// import Browser from "../programs/Browser/Browser";
 export const ProgramContext = createContext();
 
 class ProgramContextProvider extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
+      webpages: [
+        {
+          name: "DirtyMiniatures",
+          iconName: "Dirtyminiatures.html",
+          url: "https://dirtyminiatures.com",
+          open: false,
+          active: false
+        },
+        {
+          name: "Snake3d",
+          iconName: "snake3d.html",
+          url: "https://dirtyminiatures.com/game",
+          open: false,
+          active: false
+        }
+      ],
       programs: [
         {
           tag: "Cmd",
@@ -22,11 +36,12 @@ class ProgramContextProvider extends Component {
           icon: cmdIcon,
           active: false,
           open: false,
-          class: Cmd,
+          class: "Cmd",
           x: 0,
           y: 0,
           taskbar_x: 0,
-          taskbar_y: 0
+          taskbar_y: 0,
+          desktopShortcut: true
         },
         {
           tag: "Notepad",
@@ -35,11 +50,12 @@ class ProgramContextProvider extends Component {
           icon: noteIcon,
           active: false,
           open: false,
-          class: Notepad,
+          class: "Notepad",
           x: 0,
           y: 0,
           taskbar_x: 0,
-          taskbar_y: 0
+          taskbar_y: 0,
+          desktopShortcut: true
         },
         {
           tag: "Folder",
@@ -48,11 +64,12 @@ class ProgramContextProvider extends Component {
           icon: folderIcon,
           active: false,
           open: false,
-          class: Folder,
+          class: "Folder",
           x: 0,
           y: 0,
           taskbar_x: 0,
-          taskbar_y: 0
+          taskbar_y: 0,
+          desktopShortcut: true
         },
         {
           tag: "Browser",
@@ -61,11 +78,12 @@ class ProgramContextProvider extends Component {
           icon: noteIcon,
           active: false,
           open: false,
-          class: Browser,
+          class: "Browser",
           x: 0,
           y: 0,
           taskbar_x: 0,
-          taskbar_y: 0
+          taskbar_y: 0,
+          desktopShortcut: false
         }
       ]
     };
@@ -74,6 +92,13 @@ class ProgramContextProvider extends Component {
   setPrograms = newState => {
     this.setState({ programs: newState });
   };
+  setWebsites = newState => {
+    console.log(newState);
+    this.setState({ webpages: newState });
+  };
+  setNewState = newState => {
+    this.setState({ newState });
+  };
   setCoords = (program, x, y) => {
     console.log(program, x, y);
     program.x = x;
@@ -81,7 +106,7 @@ class ProgramContextProvider extends Component {
     let programs = this.state.programs.map(x => {
       return x.id === program.id ? program : x;
     });
-    this.setState({ programs: programs })
+    this.setState({ programs: programs });
   };
 
   render() {
@@ -91,7 +116,9 @@ class ProgramContextProvider extends Component {
           ...this.state,
           setPrograms: this.setPrograms,
           setCoords: this.setCoords,
-          openAppFromTaskbar: this.openAppFromTaskbar
+          openAppFromTaskbar: this.openAppFromTaskbar,
+          setNewState: this.setNewState,
+          setWebsites: this.setWebsites
         }}
       >
         {this.props.children}}

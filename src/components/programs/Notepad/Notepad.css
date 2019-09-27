@@ -7,12 +7,14 @@
   cursor: default !important;
   flex-direction: column;
 }
-.notepad-wrapper{
-  height: 500px;
+.notepad-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 .notepad-text-window {
   padding: 2px;
-  height: 100%;
+  /* height: 100%; */
   background-color: white;
   color: #000000;
   font-size: 14px;
@@ -23,13 +25,20 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+  flex: 1 1;
+  /* width: 100%; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .notepad-text-window textarea {
-  height: 700px;
-  border: none;
-  width: 1200px;
   resize: none;
   overflow: hidden;
+  height: 100%;
+  width: 100%;
+  border: none;
 }
 /* .notepad-toolbar {
   background-color: #ffffff;
@@ -71,10 +80,9 @@
   font-size: 12px;
   font-family: Arial;
   border-bottom: 1px solid gainsboro;
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+/Edge */
-  user-select: none; /* Standard */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .toolbar-btn-row > span {
   padding: 2px 7px;

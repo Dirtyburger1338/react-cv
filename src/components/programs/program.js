@@ -1,7 +1,10 @@
 import React from "react";
 import { Rnd } from "react-rnd";
 import { ProgramContext } from "../general-components/programContext";
-import ReactDOM from "react-dom";
+import Browser from "./Browser/Browser";
+import Folder from "./Folder/Folder";
+import Cmd from "./Cmd/Cmd";
+import Notepad from "./Notepad/Notepad";
 
 class Program extends React.Component {
   static contextType = ProgramContext;
@@ -12,16 +15,19 @@ class Program extends React.Component {
     };
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
     this.previousTaskbarCoords = { x: 0, y: 0 };
-  }
-  componentDidUpdate = (prevProps, prevState) => {
-    console.log(this.previousTaskbarCoords.x, " ", this.props.program.taskbar_x)
-    if (this.previousTaskbarCoords.x !== this.props.program.taskbar_x) {
 
-    }
+    this.componentList = {
+      Browser: Browser,
+      Folder: Folder,
+      Cmd: Cmd,
+      Notepad: Notepad
+    };
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
     this.previousTaskbarCoords.x = this.props.program.taskbar_x;
     this.previousTaskbarCoords.y = this.props.program.taskbar_y;
-    console.log(prevState)
-  }
+  };
   handleFullScreenClick() {
     if (this.state.isfullscreen) {
       this.setState({ isfullscreen: false });
@@ -46,7 +52,7 @@ class Program extends React.Component {
 
   closeApp() {
     let state = this.context.programs.map(x => {
-      if (x.tag === "Cmd") {
+      if (x.tag === this.props.program.tag) {
         x.open = false;
       }
       return x;
@@ -54,14 +60,18 @@ class Program extends React.Component {
     this.context.setPrograms(state);
   }
 
-
   render() {
     var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
-    var ComponentClass = this.props.program.class;
+    var tagName = this.props.program.class;
+    var ComponentClass = this.componentList[tagName];
     return (
       <Rnd
         id={this.props.program.id}
-        className={this.state.isfullscreen ? "program-fullscreen" : ""}
+        className={
+          (this.state.isfullscreen ? "program-fullscreen" : "") +
+          " " +
+          (this.props.program.active ? "program-active" : "program-inactive")
+        }
         minHeight="100"
         minWidth="300"
         // onMouseDown={() => this.props.active(".cmd-exe")}
@@ -74,39 +84,72 @@ class Program extends React.Component {
         }}
         cancel=".not-draggable"
       >
-        <div
-          className={
-            !this.state.isfullscreen ? "toolbar" : "toolbar not-draggable"
-          }
-        >
-          <div className="toolbar-title">
-            <img src={this.props.program.icon} className="toolbar-icon"></img>
-            <span>{this.props.program.name}</span>
+        {this.props.program.id === "browser" ? ( //If its a browser we change the toolbar
+          <div
+            className={
+              !this.state.isfullscreen
+                ? "browser-toolbar"
+                : "browser-toolbar not-draggable"
+            }
+          >
+            <div className="toolbar-btn-collection not-draggable">
+              <button
+                className="toolbar-btn minimize-btn"
+                onClick={() => this.props.minimize(this.props.program)}
+              >
+                &#8213;
+              </button>
+              <button
+                className="toolbar-btn maximize-btn"
+                onClick={this.handleFullScreenClick}
+              >
+                {maximizeBtn}
+              </button>
+              <button
+                className="toolbar-btn close-btn"
+                onClick={() => this.closeApp()}
+              >
+                &#10005;
+              </button>
+            </div>
           </div>
-          <div className="toolbar-btn-collection not-draggable">
-            <button
-              className="toolbar-btn minimize-btn"
-              // onClick={() => this.props.minimize(".cmd-exe")}
-              onClick={() => this.props.minimize(this.props.program)}
-            //onClick={() => this.minimizeApp()}
-            >
-              &#8213;
-            </button>
-            <button
-              className="toolbar-btn maximize-btn"
-              onClick={this.handleFullScreenClick}
-            >
-              {maximizeBtn}
-            </button>
-            <button
-              className="toolbar-btn close-btn"
-              onClick={() => this.closeApp()}
-            // onClick={() => this.props.exit(".cmd-exe")}
-            >
-              &#10005;
-            </button>
+        ) : (
+          <div
+            className={
+              !this.state.isfullscreen ? "toolbar" : "toolbar not-draggable"
+            }
+          >
+            <div className="toolbar-title">
+              <img
+                src={this.props.program.icon}
+                alt=""
+                className="toolbar-icon"
+              ></img>
+              <span>{this.props.program.name}</span>
+            </div>
+            <div className="toolbar-btn-collection not-draggable">
+              <button
+                className="toolbar-btn minimize-btn"
+                onClick={() => this.props.minimize(this.props.program)}
+              >
+                &#8213;
+              </button>
+              <button
+                className="toolbar-btn maximize-btn"
+                onClick={this.handleFullScreenClick}
+              >
+                {maximizeBtn}
+              </button>
+              <button
+                className="toolbar-btn close-btn"
+                onClick={() => this.closeApp()}
+              >
+                &#10005;
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
         <div className="program-content not-draggable">
           <ComponentClass />
         </div>

@@ -1,4 +1,4 @@
-#Folder{
+#Folder {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -237,7 +237,8 @@
   outline: 1px solid rgba(4, 194, 219, 0.486);
 }
 .folder-content-shortcuts > div:focus {
-  outline: 1px solid rgba(4, 194, 219, 0.486);
+  background-color: rgba(4, 122, 219, 0.185);
+  outline: 1px solid rgba(4, 136, 219, 0.48);
 }
 .folder-content-shortcuts img {
   width: 50px;

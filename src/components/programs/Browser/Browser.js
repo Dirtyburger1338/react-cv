@@ -1,14 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./Browser.css";
-import { Rnd } from "react-rnd";
 import browserIco from "../../../images/shell32_264.ico";
-// import browserPropertiesIco from "../../../images/imageres_5367.ico";
-// import chromeIcon from "../../../images/Chrome-icon.png";
 import moreSettings from "../../../images/more-settings.svg";
 import starFavourite from "../../../images/star-favourite.png";
+import { ProgramContext } from "../../general-components/programContext";
+
+const refreshIcon = (
+  <svg viewBox="0 0 24 24" version="1.1">
+    <path d="M 20 12 C 20 16.417969 16.417969 20 12 20 C 7.582031 20 4 16.417969 4 12 C 4 7.582031 7.582031 4 12 4 C 13.113281 4 14.167969 4.238281 15.132813 4.648438 L 12.628906 7.324219 L 20.121094 7.074219 L 19.484375 0 L 17.273438 2.359375 C 15.710938 1.5 13.914063 1 12 1 C 5.925781 1 1 5.925781 1 12 C 1 18.074219 5.925781 23 12 23 C 18.074219 23 23 18.074219 23 12 Z "></path>
+  </svg>
+);
 
 class Browser extends React.Component {
+  //static contextType = ProgramContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +33,14 @@ class Browser extends React.Component {
     //this.listOfOpenWebsites = [];
     this.handleFullScreenClick = this.handleFullScreenClick.bind(this);
     this.closeTab = this.closeTab.bind(this);
+  }
+  componentDidMount() {
+    this.getActiveWebsite();
+  }
+  getActiveWebsite() {
+    let activePage = this.context.webpages.find(x => x.active);
+    this.setState({ activeWebSite: activePage });
+    //    console.log(activePage);
   }
   handleFullScreenClick() {
     if (this.state.isfullscreen) {
@@ -52,111 +65,98 @@ class Browser extends React.Component {
   }
 
   openNewPage(openedPage) {
-    this.listOfWebsites.forEach(page => {
-      if (page.name.toLowerCase() === openedPage.toLowerCase()) {
-        if (
-          !this.state.listOfOpenWebsites.some(
-            x => x["name"].toLowerCase() === openedPage.toLowerCase()
-          )
-        ) {
-          this.state.listOfOpenWebsites.push(page);
-        } else {
-        }
-        // this.setState({ activeTab: page.name });
-        this.setState({ activeWebSite: page });
-        let browser = document.getElementById("iFrame");
-        browser.style.position = "unset";
-        browser.style.position = "relative";
-      }
+    let pagestate = this.context.webpages.forEach(page => {
+      return page.name === openedPage.name
+        ? (page.active = true)
+        : (page.active = false);
     });
-  }
-  closeTab = pageName => {
-    if (this.state.listOfOpenWebsites.length < 2) {
-      this.props.exit(".browser-exe");
-    } else {
-      var remainingTabs = this.state.listOfOpenWebsites.filter(
-        x => x.name !== pageName
-      );
-      this.setState({
-        activeWebSite: remainingTabs[0],
-        listOfOpenWebsites: remainingTabs
-      });
+    console.log(pagestate);
 
-    }
+    this.context.setWebsites(pagestate);
+
+    // this.listOfWebsites.forEach(page => {
+    //   if (page.name.toLowerCase() === openedPage.toLowerCase()) {
+    //     if (
+    //       !this.state.listOfOpenWebsites.some(
+    //         x => x["name"].toLowerCase() === openedPage.toLowerCase()
+    //       )
+    //     ) {
+    //       this.state.listOfOpenWebsites.push(page);
+    //     } else {
+    //     }
+    //     // this.setState({ activeTab: page.name });
+    //     this.setState({ activeWebSite: page });
+    //     let browser = document.getElementById("iFrame");
+    //     browser.style.position = "unset";
+    //     browser.style.position = "relative";
+    //   }
+    // });
+  }
+  refreshclick() {
+    const node = ReactDOM.findDOMNode(this);
+    let programWrapper = (node.querySelector("#iFrame").src += "");
+  }
+  closeTab = closedPage => {
+    console.log(this.context.webpages);
+    let pagestate = this.context.webpages.map(page => {
+      if (page.name === closedPage.name) {
+        page.open = false;
+        page.active = false;
+      } else {
+        page.active = false;
+      }
+      return page;
+    });
+    console.log(pagestate);
+    let openSiteFound = false;
+    pagestate = pagestate.map(page => {
+      if (openSiteFound) {
+        if (page.open) {
+          page.active = true;
+          openSiteFound = true;
+        }
+      }
+
+      return page;
+    });
+    console.log(pagestate);
+
+    this.context.setWebsites(pagestate);
   };
-  setupIframeClickHandler = e => { };
+  setupIframeClickHandler = e => {};
 
   render() {
-    var maximizeBtn = this.state.isfullscreen ? "❐" : "☐";
-
+    var webpages = this.context.webpages;
+    var iframeUrl = this.context.webpages.find(x => x.active).url || "";
+    console.log(webpages);
     return (
-      <Rnd
-        id="browser"
-        minHeight="100"
-        minWidth="580"
-        onMouseDown={() => this.props.active(".browser-exe")}
-        default={{
-          x: 215,
-          y: 26,
-          width: 1100,
-          height: 900
-        }}
-        cancel=".not-draggable"
-      >
-        <div
-          className={
-            !this.state.isfullscreen
-              ? "browser-toolbar"
-              : "browser-toolbar not-draggable"
-          }
-        >
-          {!this.state.activeWebSite.url}
-          <div className="browser-toolbar-tabs">
-            {this.state.listOfOpenWebsites.map(program => (
-              <div
-                key={program.name}
-                className={
-                  this.state.activeWebSite.name === program.name
-                    ? "active-tab"
-                    : ""
-                }
-                onClick={event => {
-                  event.stopPropagation();
-                  this.openNewPage(program.name);
-                }}
-              >
-                <span>{program.name}</span>
-                <span
+      <div id="browser-program">
+        {!this.state.activeWebSite.url}
+        <div className="browser-toolbar-tabs">
+          {webpages.map(site => {
+            if (site.open) {
+              return (
+                <div
+                  key={site.name}
+                  className={site.active ? "active-tab" : ""}
                   onClick={event => {
                     event.stopPropagation();
-                    this.closeTab(program.name);
+                    this.openNewPage(site);
                   }}
                 >
-                  &#10005;
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="toolbar-btn-collection not-draggable">
-            <button
-              className="browser-toolbar-btn minimize-btn"
-              onClick={() => this.props.minimize(".browser-exe")}
-            >
-              &#8213;
-            </button>
-            <button
-              className="browser-toolbar-btn maximize-btn"
-              onClick={this.handleFullScreenClick}
-            >
-              {maximizeBtn}
-            </button>
-            <button
-              className="browser-toolbar-btn close-btn"
-              onClick={() => this.props.exit(".browser-exe")}
-            >
-              &#10005;
-            </button>
-          </div>
+                  <span>{site.name}</span>
+                  <span
+                    onClick={event => {
+                      event.stopPropagation();
+                      this.closeTab(site);
+                    }}
+                  >
+                    &#10005;
+                  </span>
+                </div>
+              );
+            }
+          })}
         </div>
 
         <div className="browser-navigation-bar  not-draggable">
@@ -191,10 +191,11 @@ class Browser extends React.Component {
                 </g>
               </svg>
             </div>
-            <div>
-              <svg viewBox="0 0 24 24" version="1.1">
-                <path d="M 20 12 C 20 16.417969 16.417969 20 12 20 C 7.582031 20 4 16.417969 4 12 C 4 7.582031 7.582031 4 12 4 C 13.113281 4 14.167969 4.238281 15.132813 4.648438 L 12.628906 7.324219 L 20.121094 7.074219 L 19.484375 0 L 17.273438 2.359375 C 15.710938 1.5 13.914063 1 12 1 C 5.925781 1 1 5.925781 1 12 C 1 18.074219 5.925781 23 12 23 C 18.074219 23 23 18.074219 23 12 Z "></path>
-              </svg>
+            <div
+              onClick={e => this.refreshclick(e)}
+              className="browser-clickable-btn"
+            >
+              {refreshIcon}
             </div>
           </div>
           <div className="browser-url-area">
@@ -219,23 +220,18 @@ class Browser extends React.Component {
             </span>
           </div>
         </div>
-        {/* <div
-          className="browser-display-area"
-          onMouseDown={() => this.props.active(".browser-exe")}
-        > */}
+
         <iframe
           id="iFrame"
-          src={this.state.activeWebSite.url}
+          src={iframeUrl}
           title="browser"
           onLoad={e => {
             this.setupIframeClickHandler(e);
           }}
         />
-        {/* <iframe src={snake3d} /> */}
-        {/* </div> */}
-      </Rnd>
+      </div>
     );
   }
 }
-
+Browser.contextType = ProgramContext;
 export default Browser;
