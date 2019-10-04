@@ -72,10 +72,8 @@ class Taskbar extends React.Component {
                 >
                   <div className={"task-" + program.id}>
                     <div className="taskbar-btn-text">
-                      <img src={program.icon} alt="img"></img>
-                      <span>
-                        {program.name} {program.active.toString()}
-                      </span>
+                      <img src={program.TbIcon} alt="img"></img>
+                      <span>{program.name}</span>
                     </div>
                   </div>
                   <div className="bottom-border"></div>

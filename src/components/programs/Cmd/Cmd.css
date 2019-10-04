@@ -9,6 +9,10 @@
     0 10px 10px -5px rgba(0, 0, 0, 0.21);
   cursor: default !important;
 }
+#cmd-input:focus {
+  /* border: 2px solid orange; */
+}
+
 .cmd-text-window {
   padding: 2px;
   position: absolute;
@@ -33,6 +37,120 @@
   align-items: center;
   line-height: 15px;
 }
-.toolbar-icon {
-  margin: 4px 4px 9px 4px;
+.text-yellow {
+  color: yellow;
+}
+.cmd-input-container {
+  display: flex;
+}
+.cmd-input-container input {
+  flex: 1;
+  /* width: 0ch; */
+  background-color: rgb(12, 12, 12);
+  border: none;
+  /*background-color: blueviolet; */
+  font-size: 14px;
+  font-family: monospace;
+  color: #ffffffc4;
+  /* caret-color: transparent; */
+  cursor: default;
+
+  /* margin-left: 4px; */
+}
+.languages-div > span:nth-of-type(1) {
+  width: 100px;
+  padding-left: 20px;
+  display: inline-block;
+}
+.languages-div > span:nth-of-type(2) {
+  color: white;
+}
+.cmd-caret {
+  border-bottom: 4px solid #ffffffc4;
+  width: 1ch;
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+
+.help-table {
+  margin-left: 40px;
+  width: calc(100% - 80px);
+  border: none;
+}
+
+.help-table td {
+  padding: 4px 15px;
+}
+
+.skills-table {
+  /* border: 1px dashed #ffffffc4; */
+  margin-left: 40px;
+  /* width: calc(100% - 80px);
+   */
+  width: 440px;
+}
+
+.skills-table tr {
+  /* border: 1px dashed #ffffffc4; */
+}
+.skills-table td {
+  /* border-top: 1px dashed #ffffffc4; */
+  text-align: center;
+  padding: 4px 15px;
+}
+.skills-table td:first-of-type {
+  /* border-right: 1px dashed #ffffffc4; */
+}
+.skills-table thead tr {
+  /* border: 1px dashed #ffffffc4; */
+}
+/* .skills-table thead th:nth-child(1) {
+  width: 200px;
+}
+.skills-table thead th:nth-child(2) {
+  width: 100px;
+}
+.skills-table thead th:nth-child(3) {
+  width: 200px;
+} */
+
+.skills-table tbody tr:nth-child(odd) td:nth-child(1) div {
+  color: yellow;
+  width: 150px;
+}
+.skills-table tbody tr:nth-child(odd) td:nth-child(2) div {
+  color: olive;
+  width: 50px;
+}
+.skills-table tbody tr:nth-child(odd) td:nth-child(3) div {
+  color: red;
+  width: 150px;
+}
+.skills-table tr:nth-child(even) td {
+  padding: 0;
+}
+.bodystats-table {
+  margin-left: 40px;
+  width: calc(100% - 80px);
+}
+.bodystats-table thead th {
+  text-align: left;
+}
+.bodystats-table td {
+  padding: 2px 0;
+}
+.bodystats-table td:first-of-type {
+}
+.bodystats-table thead tr {
+  border: 1px dashed #ffffffc4;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
 }

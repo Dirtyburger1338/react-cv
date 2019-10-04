@@ -35,8 +35,8 @@
   font-size: 12px;
 }
 .taskbar-active-programs > div img {
-  padding: 0 4px;
-  height: 23px;
+  margin: 0 4px;
+  height: 20px;
 }
 .taskbar-active-programs > div:hover {
   background-color: #4e4e4ec9;

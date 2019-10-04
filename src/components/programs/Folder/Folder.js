@@ -97,9 +97,18 @@ class Folder extends React.Component {
     // this.setFolderIconActive(state);
   }
   openShortcut(state) {
-    // this.props.shortcutOpened(state);
-    var programs = this.context.programs.map(x => {
+    let currentMax = 0;
+    this.context.programs.forEach(element => {
+      if (element.zIndex > currentMax && element.tag !== state.tag) {
+        currentMax = element.zIndex;
+      }
+    });
+
+    currentMax = currentMax + 1;
+    console.log(currentMax);
+    let programs = this.context.programs.map(x => {
       if (x.id === "browser") {
+        x.zIndex = currentMax;
         x.active = true;
         x.open = true;
       } else {
@@ -107,6 +116,17 @@ class Folder extends React.Component {
       }
       return x;
     });
+
+    // // this.props.shortcutOpened(state);
+    // var programs = this.context.programs.map(x => {
+    //   if (x.id === "browser") {
+    //     x.active = true;
+    //     x.open = true;
+    //   } else {
+    //     x.active = false;
+    //   }
+    //   return x;
+    // });
 
     var websites = this.context.webpages.map(x => {
       if (x.name === state.name) {

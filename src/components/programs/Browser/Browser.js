@@ -5,6 +5,7 @@ import browserIco from "../../../images/shell32_264.ico";
 import moreSettings from "../../../images/more-settings.svg";
 import starFavourite from "../../../images/star-favourite.png";
 import { ProgramContext } from "../../general-components/programContext";
+import { program } from "@babel/types";
 
 const refreshIcon = (
   <svg viewBox="0 0 24 24" version="1.1">
@@ -65,10 +66,11 @@ class Browser extends React.Component {
   }
 
   openNewPage(openedPage) {
-    let pagestate = this.context.webpages.forEach(page => {
-      return page.name === openedPage.name
+    let pagestate = this.context.webpages.map(page => {
+      page.name === openedPage.name
         ? (page.active = true)
         : (page.active = false);
+      return page;
     });
     console.log(pagestate);
 
@@ -98,28 +100,41 @@ class Browser extends React.Component {
   }
   closeTab = closedPage => {
     console.log(this.context.webpages);
+
+    //Close tab
     let pagestate = this.context.webpages.map(page => {
       if (page.name === closedPage.name) {
         page.open = false;
-        page.active = false;
-      } else {
         page.active = false;
       }
       return page;
     });
     console.log(pagestate);
+
+    //See if any other tabs are open and set the first one to active
     let openSiteFound = false;
     pagestate = pagestate.map(page => {
-      if (openSiteFound) {
+      if (!openSiteFound) {
         if (page.open) {
           page.active = true;
           openSiteFound = true;
         }
       }
-
       return page;
     });
-    console.log(pagestate);
+
+    console.log(this.context);
+    if (!openSiteFound) {
+      var programs = this.context.programs;
+      programs.forEach(x => {
+        if (x.tag === "Browser") {
+          x.open = false;
+          x.active = false;
+        }
+      });
+      this.context.setPrograms(programs);
+      // this.context.setWebsites(pagestate);
+    }
 
     this.context.setWebsites(pagestate);
   };
@@ -127,8 +142,11 @@ class Browser extends React.Component {
 
   render() {
     var webpages = this.context.webpages;
-    var iframeUrl = this.context.webpages.find(x => x.active).url || "";
-    console.log(webpages);
+    var activePage = this.context.webpages.find(x => x.active);
+    var iframeUrl = "";
+
+    activePage == null ? (iframeUrl = "") : (iframeUrl = activePage.url);
+
     return (
       <div id="browser-program">
         {!this.state.activeWebSite.url}
@@ -204,7 +222,7 @@ class Browser extends React.Component {
                 <div>
                   <img src={browserIco} alt="icon"></img>
                 </div>
-                <div>{this.state.activeWebSite.url}</div>
+                <div>{iframeUrl}</div>
               </div>
               <div className="browser-url-area-favourite">
                 <img src={starFavourite} alt="icon"></img>

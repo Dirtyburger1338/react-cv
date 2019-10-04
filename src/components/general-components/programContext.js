@@ -2,6 +2,12 @@ import React, { createContext, Component } from "react";
 import cmdIcon from "../../images/cmd-icon.ico";
 import noteIcon from "../../images/note-icon.ico";
 import folderIcon from "../../images/shell32_264.ico";
+import TbFolderIcon from "../../images/folder-icon-sm.ico";
+import TbCmdIcon from "../../images/cmd-icon-sm.ico";
+import TbCmdIcon2 from "../../images/cmd-icon-sm.ico";
+import TbCmdIcon3 from "../../images/cmd-icon-sm.ico";
+import noteIcon2 from "../../images/note-icon2.png";
+import TbNoteIcon from "../../images/note-icon-sm.png";
 // import Cmd from "../programs/Cmd/Cmd";
 // import Notepad from "../programs/Notepad/Notepad";
 // import Folder from "../programs/Folder/Folder";
@@ -34,6 +40,7 @@ class ProgramContextProvider extends Component {
           name: "User_skills",
           id: "cmd",
           icon: cmdIcon,
+          TbIcon: TbCmdIcon3,
           active: false,
           open: false,
           class: "Cmd",
@@ -41,13 +48,15 @@ class ProgramContextProvider extends Component {
           y: 0,
           taskbar_x: 0,
           taskbar_y: 0,
-          desktopShortcut: true
+          desktopShortcut: true,
+          zIndex: 0
         },
         {
           tag: "Notepad",
-          name: "Per Nilsson bio",
+          name: "Per Nilsson bio.txt",
           id: "notepad",
-          icon: noteIcon,
+          icon: noteIcon2,
+          TbIcon: TbNoteIcon,
           active: false,
           open: false,
           class: "Notepad",
@@ -55,13 +64,15 @@ class ProgramContextProvider extends Component {
           y: 0,
           taskbar_x: 0,
           taskbar_y: 0,
-          desktopShortcut: true
+          desktopShortcut: true,
+          zIndex: 0
         },
         {
           tag: "Folder",
           name: "My projects",
           id: "folder",
           icon: folderIcon,
+          TbIcon: TbFolderIcon,
           active: false,
           open: false,
           class: "Folder",
@@ -69,13 +80,15 @@ class ProgramContextProvider extends Component {
           y: 0,
           taskbar_x: 0,
           taskbar_y: 0,
-          desktopShortcut: true
+          desktopShortcut: true,
+          zIndex: 0
         },
         {
           tag: "Browser",
           name: "Chrome",
           id: "browser",
           icon: noteIcon,
+          TbIcon: TbFolderIcon,
           active: false,
           open: false,
           class: "Browser",
@@ -83,7 +96,8 @@ class ProgramContextProvider extends Component {
           y: 0,
           taskbar_x: 0,
           taskbar_y: 0,
-          desktopShortcut: false
+          desktopShortcut: false,
+          zIndex: 0
         }
       ]
     };
@@ -93,14 +107,12 @@ class ProgramContextProvider extends Component {
     this.setState({ programs: newState });
   };
   setWebsites = newState => {
-    console.log(newState);
     this.setState({ webpages: newState });
   };
   setNewState = newState => {
     this.setState({ newState });
   };
   setCoords = (program, x, y) => {
-    console.log(program, x, y);
     program.x = x;
     program.y = y;
     let programs = this.state.programs.map(x => {

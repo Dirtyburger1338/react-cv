@@ -78,6 +78,10 @@
   justify-content: space-between;
   height: 32px;
 }
+.toolbar-icon {
+  margin: 8px 4px 9px 4px;
+  height: 20px;
+}
 .program-active {
   outline: 1px solid #444444c7;
 }
@@ -89,6 +93,10 @@
 }
 .program-inactive .toolbar {
   color: rgb(139, 139, 139);
+}
+.program-fullscreen .toolbar {
+  color: rgb(26, 26, 26);
+  height: 26px;
 }
 .toolbar-btn {
   width: 30px;

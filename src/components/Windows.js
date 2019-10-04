@@ -39,15 +39,34 @@ class Windows extends React.Component {
   };
 
   setActive(program) {
-    var programs = this.context.programs.map(x => {
-      if (x.id === program.id) {
+    let currentMax = 0;
+    this.context.programs.forEach(element => {
+      if (element.zIndex > currentMax && element.tag !== program.tag) {
+        currentMax = element.zIndex;
+      }
+    });
+
+    currentMax = currentMax + 1;
+    let state = this.context.programs.map(x => {
+      if (x.tag === program.tag) {
+        x.zIndex = currentMax;
         x.active = true;
       } else {
         x.active = false;
       }
       return x;
     });
-    this.context.setPrograms(programs);
+    this.context.setPrograms(state);
+
+    // var programs = this.context.programs.map(x => {
+    //   if (x.id === program.id) {
+    //     x.active = true;
+    //   } else {
+    //     x.active = false;
+    //   }
+    //   return x;
+    // });
+    // this.context.setPrograms(programs);
   }
 
   openAppFromTaskbar = (e, program) => {
@@ -165,6 +184,7 @@ class Windows extends React.Component {
   };
 
   openApp = program => {
+    console.log(program);
     this.openAppFromIcon(program);
     //this.taskbar.current.setActive(program);
   };
@@ -212,9 +232,7 @@ class Windows extends React.Component {
                   <div>
                     <img src={program.icon} alt="icon"></img>
                   </div>
-                  <div>
-                    {program.name} {program.open ? "y" : "n"}
-                  </div>
+                  <div>{program.name}</div>
                 </div>
               );
             }
@@ -225,13 +243,12 @@ class Windows extends React.Component {
           if (program.open) {
             return (
               <div
+                style={{ zIndex: program.zIndex }}
                 className={
-                  "program " +
-                  program.tag +
-                  " " +
-                  (program.active
-                    ? "program-window-front"
-                    : "program-window-back")
+                  "program " + program.tag + " " //+
+                  // (program.active
+                  //   ? "program-window-front"
+                  //   : "program-window-back")
                 }
                 key={program.tag}
               >

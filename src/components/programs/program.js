@@ -39,14 +39,35 @@ class Program extends React.Component {
   }
 
   setActive() {
+    let currentMax = 0;
+    this.context.programs.forEach(element => {
+      if (
+        element.zIndex > currentMax &&
+        element.tag !== this.props.program.tag
+      ) {
+        currentMax = element.zIndex;
+      }
+    });
+
+    currentMax = currentMax + 1;
+    console.log(currentMax);
     let state = this.context.programs.map(x => {
       if (x.tag === this.props.program.tag) {
+        x.zIndex = currentMax;
         x.active = true;
       } else {
         x.active = false;
       }
       return x;
     });
+    // let state = this.context.programs.map(x => {
+    //   if (x.tag === this.props.program.tag) {
+    //     x.active = true;
+    //   } else {
+    //     x.active = false;
+    //   }
+    //   return x;
+    // });
     this.context.setPrograms(state);
   }
 
@@ -121,7 +142,7 @@ class Program extends React.Component {
           >
             <div className="toolbar-title">
               <img
-                src={this.props.program.icon}
+                src={this.props.program.TbIcon}
                 alt=""
                 className="toolbar-icon"
               ></img>
