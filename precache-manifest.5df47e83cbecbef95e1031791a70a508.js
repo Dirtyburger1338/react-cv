@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8cf16b6cbfe85c4353a369b5f7fe6025",
+    "revision": "c89b0793f50f1af23174463eb15c39a2",
     "url": "/react-cv/index.html"
   },
   {
-    "revision": "65308803bf941caba8ba",
-    "url": "/react-cv/static/css/main.67b9c9dd.chunk.css"
+    "revision": "4b1b7869c66f1e8f60da",
+    "url": "/react-cv/static/css/main.5789028c.chunk.css"
   },
   {
-    "revision": "f68f3edd9e74263c089e",
-    "url": "/react-cv/static/js/2.48cdb055.chunk.js"
+    "revision": "42caa67299da3c1db434",
+    "url": "/react-cv/static/js/2.fc112d77.chunk.js"
   },
   {
-    "revision": "65308803bf941caba8ba",
-    "url": "/react-cv/static/js/main.915f7a6d.chunk.js"
+    "revision": "4b1b7869c66f1e8f60da",
+    "url": "/react-cv/static/js/main.851da753.chunk.js"
   },
   {
     "revision": "d8f97377dad5c9d315fe",
@@ -28,12 +28,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-cv/static/media/Roboto-Bold.e07df86c.ttf"
   },
   {
+    "revision": "00b177ae0c0e5c9acee0ae9186f5a186",
+    "url": "/react-cv/static/media/cmd-icon-sm.00b177ae.ico"
+  },
+  {
     "revision": "dedf478dc323874baa7eaf90492ce5b0",
     "url": "/react-cv/static/media/cmd-icon.dedf478d.ico"
   },
   {
-    "revision": "f81d3bf5bb4e4d45eeb45c6e81b1c703",
-    "url": "/react-cv/static/media/imageres_5367.f81d3bf5.ico"
+    "revision": "93fadcbece0070413672e0f3cbed08ab",
+    "url": "/react-cv/static/media/folder-icon-sm.93fadcbe.ico"
   },
   {
     "revision": "f80596190df6735d3db97bc4410d6338",
