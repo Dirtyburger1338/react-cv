@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "25081b292dca69cbaf3d5c3d6cdb62b2",
+    "revision": "0af3e213f847692a3cd4412e54570331",
     "url": "/react-cv/index.html"
   },
   {
-    "revision": "e2563086ddaee9ddfdeb",
-    "url": "/react-cv/static/css/main.5789028c.chunk.css"
+    "revision": "3885d1a7d35516e1ac6f",
+    "url": "/react-cv/static/css/main.485b84c2.chunk.css"
   },
   {
-    "revision": "42caa67299da3c1db434",
-    "url": "/react-cv/static/js/2.fc112d77.chunk.js"
+    "revision": "62e6686f683a97aeccec",
+    "url": "/react-cv/static/js/2.fc0f5c46.chunk.js"
   },
   {
-    "revision": "e2563086ddaee9ddfdeb",
-    "url": "/react-cv/static/js/main.54425292.chunk.js"
+    "revision": "3885d1a7d35516e1ac6f",
+    "url": "/react-cv/static/js/main.ba81d77c.chunk.js"
   },
   {
     "revision": "d8f97377dad5c9d315fe",
@@ -40,12 +40,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-cv/static/media/folder-icon-sm.93fadcbe.ico"
   },
   {
+    "revision": "4ba6b33ec9c109e5d564bf44f40d61e3",
+    "url": "/react-cv/static/media/hamburger-menu.4ba6b33e.svg"
+  },
+  {
     "revision": "f80596190df6735d3db97bc4410d6338",
     "url": "/react-cv/static/media/more-settings.f8059619.svg"
   },
   {
-    "revision": "b98de4539f9ca54e380b77912ee41d2d",
-    "url": "/react-cv/static/media/note-icon.b98de453.ico"
+    "revision": "4893cb6fdc77c6999db257ca6c7e9a2a",
+    "url": "/react-cv/static/media/powerbtn.4893cb6f.svg"
+  },
+  {
+    "revision": "e4f8d485ed0cc0218bea3d33dc166834",
+    "url": "/react-cv/static/media/settings.e4f8d485.svg"
   },
   {
     "revision": "bdc4ab6b31161aaa77d6381539c4cc73",
