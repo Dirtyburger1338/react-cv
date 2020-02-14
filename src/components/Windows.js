@@ -14,6 +14,7 @@ import Browser from "./programs/Browser/Browser";
 import Program from "./programs/program";
 import Taskbar from "./general-components/taskbar/Taskbar";
 import StartModal from "./general-components/start-modal/Start-modal";
+import Startmenu from "./general-components/start-menu/Start-menu";
 import { ProgramContext } from "./general-components/programContext";
 
 class Windows extends React.Component {
@@ -34,6 +35,7 @@ class Windows extends React.Component {
   }
 
   openAppFromIcon = program => {
+    console.log(program);
     program.open = true;
     this.setActive(program);
   };
@@ -200,13 +202,26 @@ class Windows extends React.Component {
         this.clicks.length > 1 &&
         this.clicks[this.clicks.length - 1] -
           this.clicks[this.clicks.length - 2] <
-          200
+          350
       ) {
         this.openApp(state);
       }
-    }, 250);
+    }, 350);
   }
 
+  generalClicks(e) {
+    e.persist();
+    // var rect = e.target.getBoundingClientRect();
+    // var x = e.clientX - rect.left; //x position within the element.
+    // var y = e.clientY - rect.top; //y position within the element.
+    // console.log(x, y);
+    // console.log(e.target);
+    // console.log(e.target.classList);
+    if (e.target.classList.contains("ignore-cancel-click")) {
+    } else {
+      this.context.setStartMenuState(false);
+    }
+  }
   openShortcut = shortcut => {
     this.browser.current.openNewPage(shortcut);
     this.openApp(".browser-exe");
@@ -214,10 +229,15 @@ class Windows extends React.Component {
   };
 
   render() {
+    console.log("ren");
     const programs = this.context.programs;
 
     return (
-      <div id="Menu-page" className="module-page">
+      <div
+        id="Menu-page"
+        className="module-page"
+        onClick={e => this.generalClicks(e)}
+      >
         <StartModal></StartModal>
         <div className="Menu-buttons">
           {programs.map(program => {
@@ -263,6 +283,7 @@ class Windows extends React.Component {
         })}
         <Taskbar
           ref={this.taskbar}
+          programOpenedFromStartMenu={this.openAppFromIcon}
           taskbarItemClicked={this.openAppFromTaskbar}
         />
       </div>

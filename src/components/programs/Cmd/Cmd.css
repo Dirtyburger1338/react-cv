@@ -89,7 +89,16 @@
    */
   width: 440px;
 }
-
+.skills-table-flex {
+  display: flex;
+}
+.skills-table-name {
+  width: 125px;
+}
+.skills-table-divider {
+  width: 70px;
+  text-align: center;
+}
 .skills-table tr {
   /* border: 1px dashed #ffffffc4; */
 }

@@ -1,10 +1,8 @@
 import React, { createContext, Component } from "react";
 import cmdIcon from "../../images/cmd-icon.ico";
-import noteIcon from "../../images/note-icon.ico";
 import folderIcon from "../../images/shell32_264.ico";
 import TbFolderIcon from "../../images/folder-icon-sm.ico";
-import TbCmdIcon from "../../images/cmd-icon-sm.ico";
-import TbCmdIcon2 from "../../images/cmd-icon-sm.ico";
+import TbChromeIcon from "../../images/Chrome-icon.png";
 import TbCmdIcon3 from "../../images/cmd-icon-sm.ico";
 import noteIcon2 from "../../images/note-icon2.png";
 import TbNoteIcon from "../../images/note-icon-sm.png";
@@ -18,6 +16,7 @@ class ProgramContextProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      startMenuOpen: false,
       webpages: [
         {
           name: "DirtyMiniatures",
@@ -53,7 +52,7 @@ class ProgramContextProvider extends Component {
         },
         {
           tag: "Notepad",
-          name: "Per Nilsson bio.txt",
+          name: "About me.txt",
           id: "notepad",
           icon: noteIcon2,
           TbIcon: TbNoteIcon,
@@ -87,8 +86,8 @@ class ProgramContextProvider extends Component {
           tag: "Browser",
           name: "Chrome",
           id: "browser",
-          icon: noteIcon,
-          TbIcon: TbFolderIcon,
+          icon: TbChromeIcon,
+          TbIcon: TbChromeIcon,
           active: false,
           open: false,
           class: "Browser",
@@ -120,6 +119,10 @@ class ProgramContextProvider extends Component {
     });
     this.setState({ programs: programs });
   };
+  setStartMenuState = isOpen => {
+    console.log("setting state to ", isOpen);
+    this.setState({ startMenuOpen: isOpen });
+  };
 
   render() {
     return (
@@ -130,7 +133,8 @@ class ProgramContextProvider extends Component {
           setCoords: this.setCoords,
           openAppFromTaskbar: this.openAppFromTaskbar,
           setNewState: this.setNewState,
-          setWebsites: this.setWebsites
+          setWebsites: this.setWebsites,
+          setStartMenuState: this.setStartMenuState
         }}
       >
         {this.props.children}}

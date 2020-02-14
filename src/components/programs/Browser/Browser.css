@@ -193,10 +193,18 @@
 }
 .browser-url-area-text > div:nth-child(1) {
   display: flex;
+
   align-items: center;
 }
 .browser-url-area-text > div:nth-child(2) {
   font-size: 14px;
+  width: 100%;
+}
+.browser-url-area-text > div:nth-child(2) input {
+  background: none;
+  color: rgb(95, 95, 95);
+  width: 100%;
+  border: none;
 }
 .browser-url-area img {
   height: 20px;
@@ -221,6 +229,7 @@
   display: flex;
   /* line-height: 18px; */
   align-items: center;
+  width: 100%;
 }
 .browser-url-area-text > div {
   padding: 0 2px;

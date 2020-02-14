@@ -10,7 +10,7 @@ var helptext = (
     <div>------------------</div>
     <br></br>
     The following commands are available:
-    <table class="help-table">
+    <table className="help-table">
       <tbody>
         <tr>
           <td>"languages -l"</td>
@@ -42,7 +42,7 @@ var lang = [
   { name: "TypeScript", level: 8 },
   { name: "HTML", level: 8 },
   { name: "CSS", level: 8 },
-  { name: "PHP", level: 4 }
+  { name: "PHP", level: 7 }
 ];
 var skills = [
   { name: "Angular", level: "Expert" },
@@ -209,38 +209,55 @@ class Cmd extends React.Component {
   showSkills = value => {
     let newText = [...this.state.consoleText];
     newText.push(<span>C:\Users\Guest>{value}</span>);
+
     var sTable = (
-      <table className="skills-table">
-        <thead>
-          <tr>
-            <th>Tech</th>
-            <th>-</th>
-            <th>Level</th>
-          </tr>
-        </thead>
-        <tbody>
+      <>
+        <div>--------------SKILLS----------------</div>
+        <div>
           {skills.map((skills, i) => (
-            <jsxFragment>
-              <tr key={i}>
-                <td>
-                  <div>{skills.name}</div>
-                </td>
-                <td>
-                  <div>|</div>
-                </td>
-                <td>
-                  <div>{skills.level}</div>
-                </td>
-              </tr>
-              <tr>
-                <td colSpan="3">
-                  -------------------------------------------------------------
-                </td>
-              </tr>
-            </jsxFragment>
+            <div key={i} className="skills-table-flex">
+              <div className="skills-table-name">{skills.name}</div>
+              <div className="skills-table-divider">
+                {" "}
+                &#32; &#32; &#32;| &#32; &#32; &#32;
+              </div>
+              <div>{skills.level}</div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+        <div>------------------------------------</div>
+      </>
+      // <table className="skills-table">
+      //   <thead>
+      //     <tr>
+      //       <th>Tech</th>
+      //       <th>-</th>
+      //       <th>Level</th>
+      //     </tr>
+      //   </thead>
+      //   <tbody>
+      //     {skills.map((skills, i) => (
+      //       <jsxFragment>
+      //         <tr key={i}>
+      //           <td>
+      //             <div>{skills.name}</div>
+      //           </td>
+      //           <td>
+      //             <div>|</div>
+      //           </td>
+      //           <td>
+      //             <div>{skills.level}</div>
+      //           </td>
+      //         </tr>
+      //         <tr>
+      //           <td colSpan="3">
+      //             -------------------------------------------------------------
+      //           </td>
+      //         </tr>
+      //       </jsxFragment>
+      //     ))}
+      //   </tbody>
+      // </table>
     );
     newText.push(sTable);
     // skills.forEach(x => {

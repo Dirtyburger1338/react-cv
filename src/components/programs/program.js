@@ -10,6 +10,8 @@ class Program extends React.Component {
   static contextType = ProgramContext;
   constructor(props) {
     super(props);
+    this.clicks = [];
+    this.timeout = null;
     this.state = {
       isfullscreen: false
     };
@@ -36,6 +38,27 @@ class Program extends React.Component {
     } else {
       this.setState({ isfullscreen: true });
     }
+  }
+
+  //Single or Double click navigator
+  taskbarClickHandler(e) {
+    console.log("click");
+    e.persist();
+    e.preventDefault();
+    this.clicks.push(new Date().getTime());
+    window.clearTimeout(this.timeout);
+    this.timeout = window.setTimeout(() => {
+      if (
+        this.clicks.length > 1 &&
+        this.clicks[this.clicks.length - 1] -
+          this.clicks[this.clicks.length - 2] <
+          200
+      ) {
+        this.handleFullScreenClick();
+      }
+    }, 250);
+
+    this.setActive();
   }
 
   setActive() {
@@ -96,7 +119,8 @@ class Program extends React.Component {
         minHeight="100"
         minWidth="300"
         // onMouseDown={() => this.props.active(".cmd-exe")}
-        onMouseDown={() => this.setActive()}
+
+        //onClick={e => this.taskbarClickHandler(e)}
         default={{
           x: 60 + this.props.index * 50,
           y: 60 + this.props.index * 60,
@@ -107,6 +131,7 @@ class Program extends React.Component {
       >
         {this.props.program.id === "browser" ? ( //If its a browser we change the toolbar
           <div
+            onClick={e => this.taskbarClickHandler(e)}
             className={
               !this.state.isfullscreen
                 ? "browser-toolbar"
@@ -136,6 +161,7 @@ class Program extends React.Component {
           </div>
         ) : (
           <div
+            onClick={e => this.taskbarClickHandler(e)}
             className={
               !this.state.isfullscreen ? "toolbar" : "toolbar not-draggable"
             }
@@ -171,7 +197,10 @@ class Program extends React.Component {
           </div>
         )}
 
-        <div className="program-content not-draggable">
+        <div
+          className="program-content not-draggable"
+          onMouseDown={() => this.setActive()}
+        >
           <ComponentClass />
         </div>
       </Rnd>

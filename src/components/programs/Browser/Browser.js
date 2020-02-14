@@ -25,7 +25,8 @@ class Browser extends React.Component {
       x: 710,
       y: 10,
       isfullscreen: false,
-      listOfOpenWebsites: []
+      listOfOpenWebsites: [],
+      currentUrl: ""
     };
     this.listOfWebsites = [
       { name: "DirtyMiniatures", url: "http://dirtyminiatures.com/" },
@@ -139,7 +140,9 @@ class Browser extends React.Component {
     this.context.setWebsites(pagestate);
   };
   setupIframeClickHandler = e => {};
-
+  inputChangedHandler = e => {
+    this.setState({ currentUrl: e.target.value });
+  };
   render() {
     var webpages = this.context.webpages;
     var activePage = this.context.webpages.find(x => x.active);
@@ -149,7 +152,7 @@ class Browser extends React.Component {
 
     return (
       <div id="browser-program">
-        {!this.state.activeWebSite.url}
+        {/* {!this.state.activeWebSite.url} */}
         <div className="browser-toolbar-tabs">
           {webpages.map(site => {
             if (site.open) {
@@ -222,7 +225,13 @@ class Browser extends React.Component {
                 <div>
                   <img src={browserIco} alt="icon"></img>
                 </div>
-                <div>{iframeUrl}</div>
+                <div>
+                  <input
+                    type="text"
+                    value={this.state.currentUrl}
+                    onChange={event => this.inputChangedHandler(event)}
+                  ></input>
+                </div>
               </div>
               <div className="browser-url-area-favourite">
                 <img src={starFavourite} alt="icon"></img>

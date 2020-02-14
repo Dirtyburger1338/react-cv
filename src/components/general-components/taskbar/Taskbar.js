@@ -1,13 +1,16 @@
 import React from "react";
 import "./Taskbar.css";
 import { ProgramContext } from "../programContext";
+import Startmenu from "../../../components/general-components/start-menu/Start-menu";
+
 class Taskbar extends React.Component {
   static contextType = ProgramContext;
   constructor(props) {
     super(props);
     this.state = {
       activeProgram: "",
-      clock: ""
+      clock: "",
+      startMenuOpen: false
     };
   }
   componentDidMount = () => {
@@ -31,21 +34,53 @@ class Taskbar extends React.Component {
     // console.log(e)
     this.context.openAppFromTaskbar(program, e.clientX, e.clientY);
   };
+  startMenuBtnClicked = e => {
+    // console.log(e)
+    this.context.startMenuOpen
+      ? this.context.setStartMenuState(false)
+      : this.context.setStartMenuState(true);
+  };
 
+  programMenuItemClicked = (e, program) => {
+    this.props.programOpenedFromStartMenu(program);
+  };
+  componentDidUpdate(prevProps, prevState) {
+    Object.entries(this.props).forEach(
+      ([key, val]) =>
+        prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    );
+    if (this.state) {
+      Object.entries(this.state).forEach(
+        ([key, val]) =>
+          prevState[key] !== val && console.log(`State '${key}' changed`)
+      );
+    }
+  }
   render() {
     var programs = this.context.programs;
+    console.log(this.context.startMenuOpen);
 
     return (
       <div id="taskbar" className="taskbar">
-        <button className="taskbar-startmenu-btn">
-          <svg viewBox="0 0 48 48">
+        {this.context.startMenuOpen ? (
+          <Startmenu
+            programMenuItemClicked={this.programMenuItemClicked}
+          ></Startmenu>
+        ) : (
+          <></>
+        )}
+        <button
+          className="taskbar-startmenu-btn ignore-cancel-click"
+          onClick={e => this.startMenuBtnClicked(e)}
+        >
+          <svg viewBox="0 0 48 48" className="ignore-cancel-click">
             <path
+              className="ignore-cancel-click"
               fill="#ffffff"
               d="M20 25.026L5.011 25 5.012 37.744 20 39.818zM22 25.03L22 40.095 42.995 43 43 25.066zM20 8.256L5 10.38 5.014 23 20 23zM22 7.973L22 23 42.995 23 42.995 5z"
             />
           </svg>
         </button>
-
         <button className="taskbar-search-btn">
           <svg viewBox="0 0 16 16" version="1.1">
             <path
@@ -84,7 +119,6 @@ class Taskbar extends React.Component {
             }
           })}
         </div>
-
         <div className="taskbar-clock">
           <span>{this.state.clock}</span>
         </div>
